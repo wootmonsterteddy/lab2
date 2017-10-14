@@ -116,8 +116,12 @@ int show(char name) //Done
 	//For arrays
 	if((name >= 'A' && name <= 'C') || name == 'R' || (name >= 'X' && name <= 'Y'))
 	{
+<<<<<<< HEAD
+		for(i = 0; i < 50 ; ++i)
+=======
 		for(int i = 0; i < 100 ; ++i)
 		{
+>>>>>>> f18dad3dff1f27821fac4d3d6660668979e409f3
 			printf("%d", name[i]);
 		}
 	}
