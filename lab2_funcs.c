@@ -13,14 +13,14 @@ double a=0, b=0, c=0, r=0, x=0, y=0;
 
 int failCheck(char var) //KLAR
 {
-		if((var >= 'a' && var <= 'c') || var == 'r' || var == 'x' || var == 'y' || (var >= 'A' && var <= 'C') || var == 'R' || var == 'X' || var == 'Y')
-		{
-			return 0;
-		}
-		else
-		{
-			return 1;
-		}
+	if((var >= 'a' && var <= 'c') || var == 'r' || var == 'x' || var == 'y' || (var >= 'A' && var <= 'C') || var == 'R' || var == 'X' || var == 'Y')
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
 }
 
 double* findPtr(char var) //KLAR
@@ -113,13 +113,17 @@ int set(char name, double v) // EJ KLAR
 
 int show(char name) //Done
 {
-	int i;
-
 	//For arrays
 	if((name >= 'A' && name <= 'C') || name == 'R' || (name >= 'X' && name <= 'Y'))
 	{
+<<<<<<< HEAD
 		for(i = 0; i < 50 ; ++i)
+=======
+		for(int i = 0; i < 100 ; ++i)
+		{
+>>>>>>> f18dad3dff1f27821fac4d3d6660668979e409f3
 			printf("%d", name[i]);
+		}
 	}
 	//For scalars
 	else if((name >= 'a' && name <= 'c') || name == 'r' || (name >= 'x' && name <= 'y'))
@@ -129,9 +133,14 @@ int show(char name) //Done
 	//For incorrect input
 	else
 	{
-		return 0;
+		return 1;
 	}
 	return 0;
+}
+
+int array(char name, double start, double stop)
+{
+
 }
 
 
