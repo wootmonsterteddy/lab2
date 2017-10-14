@@ -23,58 +23,71 @@ int failCheck(char var) //KLAR
 	}
 }
 
-double* findPtr(char var) //EJ KLAR
+struct arr find_arr(char var) //EJ KLAR
 {
+	struct arr *arrPtr;
+	//Check input
+	if(failCheck(var) == 1)
+	{
+		arrPtr = NULL;
+	}
+
+	switch(var) //Convert char to pointer to the global variable
+	{
+	case 'A': //Uppercase
+		arrPtr = &A;
+		break;
+	case 'B':
+		arrPtr = &B;
+		break;
+	case 'C':
+		arrPtr = &C;
+		break;
+	case 'R':
+		arrPtr = &R;
+		break;
+	case 'X':
+		arrPtr = &X;
+		break;
+	case 'Y':
+		arrPtr = &Y;
+		break;
+	}
+	return arrPtr;
+}
+
+struct var find_var(char var) //EJ KLAR
+{
+	struct var *varPtr;
+
 	//Check input
 	if(failCheck(var) == 1)
 	{
 		return NULL;
 	}
 
-	double *ptr;
-
 	switch(var) //Convert char to pointer to the global variable
 	{
-	case 'A': //Uppercase
-		ptr = &A;
-		break;
-	case 'B':
-		ptr = &B;
-		break;
-	case 'C':
-		ptr = &C;
-		break;
-	case 'R':
-		ptr = &R;
-		break;
-	case 'X':
-		ptr = &X;
-		break;
-	case 'Y':
-		ptr = &Y;
-		break;
-
 	case 'a': //Lowercase
-		ptr = &a;
+		varPtr = &a;
 		break;
 	case 'b':
-		ptr = &b;
+		varPtr = &b;
 		break;
 	case 'c':
-		ptr = &c;
+		varPtr = &c;
 		break;
 	case 'r':
-		ptr = &r;
+		varPtr = &r;
 		break;
 	case 'x':
-		ptr = &x;
+		varPtr = &x;
 		break;
 	case 'y':
-		ptr = &y;
+		varPtr = &y;
 		break;
 	}
-
-	return ptr;
+	return varPtr;
 }
 
 int checkSize(char var) //KLAR
