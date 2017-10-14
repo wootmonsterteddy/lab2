@@ -8,66 +8,32 @@
 #include "lab2_funcs.h"
 
 //Prepare global variables
-double A[101]={0}, B[101]={0}, C[101]={0}, R[101]={0}, X[101]={0}, Y[101]={0};
+double A[100]={0}, B[100]={0}, C[100]={0}, R[100]={0}, X[100]={0}, Y[100]={0};
 double a=0, b=0, c=0, r=0, x=0, y=0;
 
-int failCheck(char name) // KLAR
+int failCheck(char var) //KLAR
 {
-	if((name >= 'A' && name <= 'C') || (name >= 'a' && name <= 'c') ||
-			(name >= 'X' && name <= 'Y') || (name >= 'x' && name <= 'y') ||
-			name == 'R' || name == 'r')
-	{
-		return 0;
-	}
-	return 1;
+		if((var >= 'a' && var <= 'c') || var == 'r' || var == 'x' || var == 'y' || (var >= 'A' && var <= 'C') || var == 'R' || var == 'X' || var == 'Y')
+		{
+			return 0;
+		}
+		else
+		{
+			return 1;
+		}
 }
 
-double* find_var(char name)
+double* findPtr(char var) //KLAR
 {
 	//Check input
-	if(failCheck(name) == 1)
+	if(failCheck(var) == 1)
 	{
 		return NULL;
 	}
 
 	double *ptr;
 
-	switch(name) //Convert char to pointer to the global variable
-	{
-	case 'a':
-		ptr = &a;
-		break;
-	case 'b':
-		ptr = &b;
-		break;
-	case 'c':
-		ptr = &c;
-		break;
-	case 'r':
-		ptr = &r;
-		break;
-	case 'x':
-		ptr = &x;
-		break;
-	case 'y':
-		ptr = &y;
-		break;
-	}
-
-	return ptr;
-}
-
-double* find_arr(char name)
-{
-	//Check input
-	if(failCheck(name) == 1)
-	{
-		return NULL;
-	}
-
-	double *ptr;
-
-	switch(name) //Convert char to pointer to the global variable
+	switch(var) //Convert char to pointer to the global variable
 	{
 	case 'A': //Uppercase
 		ptr = &A;
@@ -111,17 +77,27 @@ double* find_arr(char name)
 	return ptr;
 }
 
-int checkSize(char name) // EJ KLAR
+int checkSize(char var) //KLAR
 {
-	int size = sizeof(name)/sizeof(double);
-	return size;
+	double *ptr = findPtr(var);
+	return sizeof(*ptr)/sizeof(double);
 }
 
-int clear(char var) // EJ KLAR
+int clear(char var) //KLAR
 {
-	if (checkSize(var) > 1)
+	//function must set all elements of an array to 0.0
+	double *ptr = findPtr(var);
+	if(checkSize(*ptr) == 1)
 	{
-		var = { 0 }; // FixaAAAAA
+		*ptr = 0.0;
+		return 0;
+	}
+	else if(checkSize(*ptr) > 1 && checkSize(*ptr) <= 101)
+	{
+		for(int i = 0; i < 100; i++)
+		{
+			ptr[i] = 0.0;
+		}
 		return 0;
 	}
 	else
@@ -133,20 +109,6 @@ int clear(char var) // EJ KLAR
 int set(char name, double v) // EJ KLAR
 {
 
-	if(checkSize(name) == 1)
-	{
-		name = v;
-	}
-	else if (checkSize(name) > 1)
-	{
-
-	}
-	else
-	{
-
-	}
-
-	return 0;
 }
 
 int show(char name)
