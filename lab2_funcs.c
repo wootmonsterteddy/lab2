@@ -23,7 +23,7 @@ int failCheck(char var) //KLAR
 	}
 }
 
-struct arr find_arr(char var) //EJ KLAR
+struct arr find_arr(char var) //EJ KLAR FIXA
 {
 	struct arr *arrPtr;
 	//Check input
@@ -56,7 +56,7 @@ struct arr find_arr(char var) //EJ KLAR
 	return arrPtr;
 }
 
-struct var find_var(char var) //EJ KLAR
+struct var find_var(char var) //EJ KLAR FIXA
 {
 	struct var *varPtr;
 
