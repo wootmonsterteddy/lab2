@@ -118,7 +118,7 @@ int show(char name) //Done
 	//For arrays
 	if((name >= 'A' && name <= 'C') || name == 'R' || (name >= 'X' && name <= 'Y'))
 	{
-		for(i = 0; i < 100 ; ++i)
+		for(i = 0; i < 50 ; ++i)
 			printf("%d", name[i]);
 	}
 	//For scalars
