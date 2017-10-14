@@ -149,7 +149,32 @@ int set(char name, double v) // EJ KLAR
 	return 0;
 }
 
-int show(char name)
+int show(char name) //Done
 {
+	int i;
 
+	//For arrays
+	if((name >= 'A' && name <= 'C') || name == 'R' || (name >= 'X' && name <= 'Y'))
+	{
+		for(i = 0; i < 100 ; ++i)
+			printf("%d", name[i]);
+	}
+	//For scalars
+	else if((name >= 'a' && name <= 'c') || name == 'r' || (name >= 'x' && name <= 'y'))
+	{
+		printf("%d", name);
+	}
+	//For incorrect input
+	else
+	{
+		return 0;
+	}
+	return 0;
 }
+
+
+
+
+
+
+
