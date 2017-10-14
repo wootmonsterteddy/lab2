@@ -8,8 +8,8 @@
 #include "lab2_funcs.h"
 
 //Prepare global variables
-double A[100]={0}, B[100]={0}, C[100]={0}, R[100]={0}, X[100]={0}, Y[100]={0};
-double a=0, b=0, c=0, r=0, x=0, y=0;
+struct var a,b,c,r,x,y;
+struct arr A,B,C,R,X,Y;
 
 int failCheck(char var) //KLAR
 {
@@ -23,7 +23,7 @@ int failCheck(char var) //KLAR
 	}
 }
 
-double* findPtr(char var) //KLAR
+double* findPtr(char var) //EJ KLAR
 {
 	//Check input
 	if(failCheck(var) == 1)
@@ -138,10 +138,3 @@ int array(char name, double start, double stop)
 {
 
 }
-
-
-
-
-
-
-
