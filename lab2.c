@@ -14,9 +14,9 @@ ____________________________
 
 Exercise 1:
 
-clear -
+clear - KLAR
 set -
-show -
+show - KLAR
 array -
 checkSize KLAR
 failCheck KLAR
