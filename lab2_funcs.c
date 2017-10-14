@@ -121,7 +121,7 @@ int clear(char var) // EJ KLAR
 {
 	if (checkSize(var) > 1)
 	{
-		var = { 0 }; // Fixa
+		var = { 0 }; // FixaAAAAA
 		return 0;
 	}
 	else

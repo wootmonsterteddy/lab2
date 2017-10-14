@@ -20,3 +20,4 @@ int checkSize(char name);
 #endif /* __LAB2_FUNCS_H__ */
 
 //Test Erik
+//12345
