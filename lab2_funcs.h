@@ -18,7 +18,3 @@ void printhelp(void);
 int checkSize(char name);
 
 #endif /* __LAB2_FUNCS_H__ */
-//hej detta är ett test
-
-//Test Erik
-//12345
