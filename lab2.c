@@ -12,6 +12,11 @@ Other:
 convertToPointer -
 ____________________________
 
+Prerequisite from lab 1:
+
+input program -> help, quit, exit commands
+____________________________
+
 Exercise 1:
 
 clear - KLAR

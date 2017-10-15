@@ -11,23 +11,28 @@
 struct var a,b,c,r,x,y;
 struct arr A,B,C,R,X,Y;
 
-int failCheck(char var) //KLAR
+int checkInput(char var) //KLAR
 {
-	if((var >= 'a' && var <= 'c') || var == 'r' || var == 'x' || var == 'y' || (var >= 'A' && var <= 'C') || var == 'R' || var == 'X' || var == 'Y')
+	//0 = fail, 1 = upper, 2 = lower
+	if((var >= 'a' && var <= 'c') || var == 'r' || var == 'x' || var == 'y')
 	{
-		return 0;
+		return 2;
 	}
-	else
+	else if ((var >= 'A' && var <= 'C') || var == 'R' || var == 'X' || var == 'Y')
 	{
 		return 1;
 	}
+	else
+	{
+		return 0;
+	}
 }
 
-struct arr find_arr(char var) //EJ KLAR FIXA
+struct arr *find_arr(char var) //EJ KLAR FIXA
 {
 	struct arr *arrPtr;
 	//Check input
-	if(failCheck(var) == 1)
+	if(checkInput(var) == 0)
 	{
 		arrPtr = NULL;
 	}
@@ -53,17 +58,18 @@ struct arr find_arr(char var) //EJ KLAR FIXA
 		arrPtr = &Y;
 		break;
 	}
-	return arrPtr;
+
+	return *arrPtr;
 }
 
-struct var find_var(char var) //EJ KLAR FIXA
+struct var *find_var(char var) //EJ KLAR FIXA
 {
 	struct var *varPtr;
 
 	//Check input
-	if(failCheck(var) == 1)
+	if(checkInput(var) == 0)
 	{
-		return NULL;
+		varPtr = NULL;
 	}
 
 	switch(var) //Convert char to pointer to the global variable
@@ -87,19 +93,32 @@ struct var find_var(char var) //EJ KLAR FIXA
 		varPtr = &y;
 		break;
 	}
-	return varPtr;
+
+	return *varPtr;
 }
 
 int checkSize(char var) //KLAR
 {
-	double *ptr = findPtr(var);
-	return sizeof(*ptr)/sizeof(double);
+	switch(checkInput(var))
+	{
+	case 1:
+		struct arr *ptr1 = find_arr(var);
+		return sizeof(ptr1)/sizeof(double)-1;
+		break;
+	case 2:
+		struct var *ptr2 = find_var(var);
+		return sizeof(ptr2)/sizeof(double)-1;
+		break;
+	default:
+		return -1;
+		break;
+	}
 }
 
 int clear(char var) //KLAR
 {
 	//function must set all elements of an array to 0.0
-	double *ptr = findPtr(var);
+	double *ptr = findPtr(var); //FIXA
 	if(checkSize(*ptr) == 1)
 	{
 		*ptr = 0.0;
@@ -122,9 +141,11 @@ int clear(char var) //KLAR
 int set(char name, double v) // EJ KLAR
 {
 
+
+	return 0;
 }
 
-int show(char name) //Done
+int show(char name) //EJ KLAR
 {
 	//For arrays
 	if((name >= 'A' && name <= 'C') || name == 'R' || (name >= 'X' && name <= 'Y'))
