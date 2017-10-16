@@ -39,7 +39,8 @@ ____________________________
 
 int main(int argc, char *argv[])
 {
-	printf("Lab 2, MINIMatlab.\n\n");
+	printf("Lab 2, MINIMatlab. Program start, enter commands:\n\n");
+
 
 
 	return 0;
