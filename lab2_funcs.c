@@ -13,30 +13,8 @@ struct arr A,B,C,R,X,Y;
 
 void readInput(void)
 {
-	struct commandList
-	{
-		char* name;
-		int n;
-	};
-	struct commandList commands[100] =
-	{
-			{"help",		1},
-			{"set",			2},
-			{"sin",			3},
-			{"show",		4},
-			{"showFile",	5},
-			{"deleteFile",	6},
-			{"importCSV",	7},
-			{"exportCSV",	8},
-			{"exportMAT",	9},
-			{"exportJSON", 	10},
-			{"exportXML", 	11},
-			{"quit",		12},
-			{"exit",		13},
-			{"exit x",	 	14},
-	};
-	char* input[50];
 
+	char* input[50];
 	fgets(input,50,stdin);
 
 }
