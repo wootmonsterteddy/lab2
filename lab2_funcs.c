@@ -11,11 +11,6 @@
 struct var a,b,c,r,x,y;
 struct arr A,B,C,R,X,Y;
 
-void startMessage(void)
-{
-	printf("Lab 2, Minimatlab.")
-}
-
 void printfhelp(void)
 {
 	printf("Available commands:\n"

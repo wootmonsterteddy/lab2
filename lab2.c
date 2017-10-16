@@ -39,7 +39,7 @@ ____________________________
 
 int main(int argc, char *argv[])
 {
-
+	printf("Lab 2, MINIMatlab.\n\n");
 
 
 	return 0;
