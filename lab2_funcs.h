@@ -16,5 +16,6 @@ int calc(char r, char x, char y, char op);
 int processLine(const char *line);
 void printhelp(void);
 int checkSize(char name);
+void startMessage(void);
 
 #endif /* __LAB2_FUNCS_H__ */
