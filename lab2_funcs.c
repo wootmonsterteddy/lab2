@@ -7,35 +7,12 @@
 
 #include "lab2_funcs.h"
 
-//Prepare global variables
-struct var a,b,c,r,x,y;
-struct arr A,B,C,R,X,Y;
-
 void readInput(void)
 {
 
 	char* input[50];
 	fgets(input,50,stdin);
 
-}
-
-void printhelp(void)
-{
-	printf("Available commands:\n"
-			"	help: shows this message\n"
-			"	set <var> <value>: Set variable <var> to value <value>, e.g. 'set a 3.14'\n"
-			"	sin <res> <var>: Calculates the sin values of <var> and stores in <res>\n"
-			"	show <var>: Shows a scalar or array variable\n"
-			"	showFile <filename>: Shows the file <filename>\n"
-			"	deleteFile <filename>: Deletes the file <filename>\n"
-			"	importCSV <var> <filename>: Imports variables from the CSV file <filename> and stores in array <var>\n"
-			"	exportCSV <filename>: Saves a variables into the CSV file <filename>\n"
-			"	exportMAT <filename>: Saves a variables into the JSON file <filename>\n"
-			"	exportJSON <filename>: Saves a variables into the JSON file <filename>\n"
-			"	exportXML <filename>: Saves a variables into the XML file <filename>\n"
-			"	quit: exit this application\n"
-			"	exit: exit this application\n"
-			"	exit x: exit this application with return code x\n");
 }
 
 int checkInput(char var) //KLAR
@@ -198,4 +175,23 @@ int show(char name) //EJ KLAR
 int array(char name, double start, double stop)
 {
 
+}
+
+void printhelp(void)
+{
+	printf("Available commands:\n"
+			"	help: shows this message\n"
+			"	set <var> <value>: Set variable <var> to value <value>, e.g. 'set a 3.14'\n"
+			"	sin <res> <var>: Calculates the sin values of <var> and stores in <res>\n"
+			"	show <var>: Shows a scalar or array variable\n"
+			"	showFile <filename>: Shows the file <filename>\n"
+			"	deleteFile <filename>: Deletes the file <filename>\n"
+			"	importCSV <var> <filename>: Imports variables from the CSV file <filename> and stores in array <var>\n"
+			"	exportCSV <filename>: Saves a variables into the CSV file <filename>\n"
+			"	exportMAT <filename>: Saves a variables into the JSON file <filename>\n"
+			"	exportJSON <filename>: Saves a variables into the JSON file <filename>\n"
+			"	exportXML <filename>: Saves a variables into the XML file <filename>\n"
+			"	quit: exit this application\n"
+			"	exit: exit this application\n"
+			"	exit x: exit this application with return code x\n");
 }

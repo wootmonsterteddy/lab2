@@ -14,6 +14,10 @@ typedef struct arr {
   double v[ARRAY_LEN];
 } matlab_arr_t;
 
+//Prepare global variables
+struct var a,b,c,r,x,y;
+struct arr A,B,C,R,X,Y;
+
 /* global variables, beware */
 extern matlab_var_t vars[6];
 extern matlab_arr_t arrs[6];
