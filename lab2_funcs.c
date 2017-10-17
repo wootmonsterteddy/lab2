@@ -10,7 +10,7 @@
 void readInput(void)
 {
 
-	char* input[50];
+	char input[50];
 	fgets(input,50,stdin);
 
 }
