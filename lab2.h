@@ -18,6 +18,11 @@ typedef struct arr {
 extern matlab_var_t vars[6];
 extern matlab_arr_t arrs[6];
 
+struct commands
+{
+	char* name;
+	int n;
+};
 
 /* function declarations */
 int processLine(const char *line);

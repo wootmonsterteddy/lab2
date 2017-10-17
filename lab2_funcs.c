@@ -8,6 +8,7 @@
 #include "lab2_funcs.h"
 
 
+
 void printhelp(void)
 {
 	printf("Available commands:\n"
