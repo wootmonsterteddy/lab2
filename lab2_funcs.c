@@ -11,7 +11,7 @@
 
 void printhelp(void)
 {
-	printf("Available commands:\n"
+	printf("\nAvailable commands:\n"
 			"	help: shows this message\n"
 			"	set <var> <value>: Set variable <var> to value <value>, e.g. 'set a 3.14'\n"
 			"	sin <res> <var>: Calculates the sin values of <var> and stores in <res>\n"
