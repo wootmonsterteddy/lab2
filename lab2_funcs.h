@@ -16,5 +16,6 @@ int processLine(const char *line);
 void printhelp(void);
 void readLine(void);
 void init(void);
+int compareStrings(char *string,char *search);
 
 #endif /* __LAB2_FUNCS_H__ */

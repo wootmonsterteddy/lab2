@@ -7,6 +7,29 @@
 
 #include "lab2_funcs.h"
 
+int compareStrings(char *string,char *compare)
+{
+	int i = 0, correct = 0, length = 0;
+
+	while(compare[i] != '\0')
+	{
+		++length;
+		++i;
+	}
+
+	i = 0;
+	while(string[i] == compare[i])
+	{
+		++correct;
+		if(correct == length)
+		{
+			return 1;
+		}
+		++i;
+	}
+	return 0;
+}
+
 struct commands commandList[20] =
 {
 		{"exit","","exit this application", 											1},
@@ -17,6 +40,7 @@ struct commands commandList[20] =
 
 void init(void)
 {
+
 	vars[0].n = 'a';
 	vars[1].n = 'b';
 	vars[2].n = 'c';
@@ -45,7 +69,7 @@ void readLine(void)
 
 int processLine(const char *line)
 {
-	char part1[20] = {0},part2[20] = {0},part3[20] = {0},part4[20] = {0};
+	char part1[20] = "",part2[20] = "",part3[20] = "",part4[20] = "";
 	int partCounter = 1, i = 0,n = 0;
 
 	while(line[i] != '\0') //Separate input into 4 parts
@@ -80,10 +104,9 @@ int processLine(const char *line)
 
 	for(int i = 0; i < 4; ++i)
 	{
-		if(part1 == commandList[i].name)
+		if(compareStrings(commandList[i].name,part1))
 		{
-			printf("Command was found.\n");
-			return 0;
+			printf("Command found.\n");
 		}
 	}
 

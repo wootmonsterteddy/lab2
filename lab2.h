@@ -15,8 +15,8 @@ typedef struct arr {
 } matlab_arr_t;
 
 /* global variables, beware */
-extern matlab_var_t vars[6];
-extern matlab_arr_t arrs[6];
+matlab_var_t vars[6];
+matlab_arr_t arrs[6];
 
 struct commands
 {
