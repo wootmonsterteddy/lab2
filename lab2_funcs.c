@@ -17,10 +17,6 @@ struct commands commandList[20] =
 
 void init(void)
 {
-
-	matlab_var_t a,b,c,r,x,y;
-	matlab_arr_t A,B,C,R,X,Y;
-
 	vars[0].n = 'a';
 	vars[1].n = 'b';
 	vars[2].n = 'c';
