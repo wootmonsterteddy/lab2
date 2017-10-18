@@ -21,7 +21,9 @@ extern matlab_arr_t arrs[6];
 struct commands
 {
 	char* name;
-	int n;
+	char* args;
+	char* description;
+	int number;
 };
 
 /* function declarations */

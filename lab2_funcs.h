@@ -14,5 +14,7 @@ int clear(char var);
 int calc(char r, char x, char y, char op);
 int processLine(const char *line);
 void printhelp(void);
+void readLine(void);
+void init(void);
 
 #endif /* __LAB2_FUNCS_H__ */
