@@ -11,9 +11,11 @@
 int main(int argc, char *argv[])
 {
 	init();
-	printhelp();
 
-	readLine();
+	while(1)
+	{
+		readLine();
+	}
 
 	return 0;
 }

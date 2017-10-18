@@ -7,6 +7,22 @@
 
 #include "lab2_funcs.h"
 
+void callCommand(char *input)
+{
+	if(input == "help")
+	{
+		printhelp();
+	}
+	else if(input == "exit")
+	{
+		exit(0);
+	}
+	else
+	{
+		printf("Command not found.\n");
+	}
+}
+
 int compareStrings(char *string,char *compare)
 {
 	int i = 0, correct = 0, length = 0;
@@ -33,7 +49,7 @@ int compareStrings(char *string,char *compare)
 struct commands commandList[20] =
 {
 		{"exit","","exit this application", 											1},
-		{"exit","x","exit this application with return code x",							2},
+		{"exit x","","exit this application with return code x",						2},
 		{"quit","","exit this application",												3},
 		{"help","","shows this message",												4},
 };
@@ -106,7 +122,7 @@ int processLine(const char *line)
 	{
 		if(compareStrings(commandList[i].name,part1))
 		{
-			printf("Command found.\n");
+			callCommand(commandList[i].name);
 		}
 	}
 
