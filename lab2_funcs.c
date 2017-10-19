@@ -7,6 +7,15 @@
 
 #include "lab2_funcs.h"
 
+struct commands commandList[20] =
+{ //name,args,description,number
+		{"exit","","exit this application", 											1},
+		{"exit x","","exit this application with return code x",						2},
+		{"quit","","exit this application",												3},
+		{"help","","shows this message",												4},
+		{"SKA EJ SYNAS","","syns denna blir jag sur",									-1},
+};
+
 void callCommand(char *input1,char *input2,char *input3,char *input4)
 {
 	if(input1 == "help")
@@ -61,14 +70,6 @@ int compareStrings(char *string,char *compare)
 	}
 	return 0;
 }
-
-struct commands commandList[20] =
-{ //name,args,description,number
-		{"exit","","exit this application", 											1},
-		{"exit x","","exit this application with return code x",						2},
-		{"quit","","exit this application",												3},
-		{"help","","shows this message",												4},
-};
 
 void init(void)
 {
@@ -161,12 +162,17 @@ void printhelp(void)
 		++i;
 	}
 	printf("Available commands:\n");
-
+/*
 	for(int i = 0; i < listSize; i++)
 	{
 		printf("	%s %s: %s\n",commandList[i].name,commandList[i].args,commandList[i].description);
 	}
-
+*/  i = 0;
+	while (commandList[i].number != -1 || i < listSize)
+	{
+		printf("	%s %s: %s\n",commandList[i].name,commandList[i].args,commandList[i].description);
+		i++;
+	}
 	/*
 	printf("\nAvailable commands:\n"
 			"	help: shows this message\n"
