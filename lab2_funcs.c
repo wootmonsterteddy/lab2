@@ -192,6 +192,7 @@ void printhelp(void)
 	 */
 }
 
+#if 0
 int failCheck(char var)
 {
 	if((var >= 'a' && var <= 'c') || var == 'r' || var == 'x' || var == 'y')
@@ -353,3 +354,4 @@ int calc(char r, char x, char y, char op)
 		return 0;
 	}
 }
+#endif
