@@ -183,7 +183,7 @@ void printhelp(void)
 	 */
 }
 
-#if 0
+#if 1
 int failCheck(char var)
 {
 	if((var >= 'a' && var <= 'c') || var == 'r' || var == 'x' || var == 'y')
@@ -199,7 +199,9 @@ int failCheck(char var)
 		return 1;
 	}
 }
+#endif
 
+#if 0
 int clear (char name)
 {
 	int i = 0;
@@ -222,8 +224,9 @@ int clear (char name)
 	}
 	return 0;
 }
+#endif
 
-
+#if 0
 double set (char name, double v)
 {
 	if(failCheck(name) == -1)
@@ -237,6 +240,9 @@ double set (char name, double v)
 		return 0;
 	}
 }
+#endif
+
+#if 0
 double array (char name, double start, double stop)
 {
 	int i = 0, temp;
@@ -256,7 +262,9 @@ double array (char name, double start, double stop)
 		return 0;
 	}
 }
+#endif
 
+#if 0
 int show(char name)
 {
 	int i = 0;
@@ -279,7 +287,9 @@ int show(char name)
 	}
 	return 0;
 }
+#endif
 
+#if 0
 int calc(char r, char x, char y, char op)
 {
 	int i = 0;
