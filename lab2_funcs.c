@@ -13,6 +13,7 @@ struct commands commandList[20] =
 		{"exit x","","exit this application with return code x",						2},
 		{"quit","","exit this application",												3},
 		{"help","","shows this message",												4},
+
 };
 
 void callCommand(char *input1,char *input2,char *input3,char *input4)
@@ -153,21 +154,16 @@ int processLine(const char *line)
 
 void printhelp(void)
 {
-	int listSize = 0,i = 0;
-
-	while(commandList[i].number)
-	{
-		listSize = commandList[i].number;
-		++i;
-	}
 	printf("Available commands:\n");
-/*
-*/  i = 0;
-	while (commandList[i].number != -1 || i < listSize)
+
+	for(int i = 0; i < 4; ++i)
 	{
-		printf("	%s %s: %s\n",commandList[i].name,commandList[i].args,commandList[i].description);
-		i++;
+		if(commandList[i].number != -1)
+		{
+			printf("	%s %s: %s\n",commandList[i].name,commandList[i].args,commandList[i].description);
+		}
 	}
+
 	/*
 	printf("\nAvailable commands:\n"
 			"	help: shows this message\n"
