@@ -187,7 +187,7 @@ void printhelp(void)
 	 */
 }
 
-#if 0
+#if 1
 int failCheck(char var)
 {
 	if((var >= 'a' && var <= 'c') || var == 'r' || var == 'x' || var == 'y')
