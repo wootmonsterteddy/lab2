@@ -192,4 +192,164 @@ void printhelp(void)
 	 */
 }
 
+int failCheck(char var)
+{
+	if((var >= 'a' && var <= 'c') || var == 'r' || var == 'x' || var == 'y')
+	{
+		return -1;
+	}
+	else if((var >= 'A' && var <= 'C') || var == 'R' || var == 'X' || var == 'Y')
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
 
+int clear (char name)
+{
+	int i = 0;
+
+	if(failCheck(name) == 1)
+	{
+		printf("Error, incorrect usage of function. \n");
+		return 0;
+	}
+	else if(failCheck(name) == -1)
+	{
+		name = 0.0;
+	}
+	else if(failCheck(name) == 0)
+	{
+		for(i = 0; i < 50; ++i)
+		{
+			name[i] = 0.0;
+		}
+	}
+	return 0;
+}
+
+
+double set (char name, double v)
+{
+	if(failCheck(name) == -1)
+	{
+		name = v;
+		return name;
+	}
+	else
+	{
+		printf("Error, incorrect input. \n");
+		return 0;
+	}
+}
+double array (char name, double start, double stop)
+{
+	int i = 0, temp;
+
+	if(failCheck(name) == 0)
+	{
+		temp = (stop - start) / 50;
+		for(i = 0; i < 50; ++i)
+		{
+			name[i] = start + (temp * i);
+		}
+		return name;
+	}
+	else
+	{
+		printf("Error, incorrect usage of function. \n");
+		return 0;
+	}
+}
+
+int show(char name)
+{
+	int i = 0;
+
+	if(failCheck(name) == -1)
+	{
+		printf("%d", name);
+	}
+	else if(failCheck(name) == 0)
+	{
+		for(i = 0; i < 50; ++i)
+		{
+			printf("%d", name[i]);
+		}
+	}
+	else
+	{
+		printf("Error, incorrect usage of function. \n");
+		return 0;
+	}
+	return 0;
+}
+
+int calc(char r, char x, char y, char op)
+{
+	int i = 0;
+
+	if( op != '+' || op != '-' || op != '*' || op != '/' || op != '!')
+	{
+		printf("Error, operator does not exist \n");
+		return 0;
+	}
+	else if(failCheck(r) == 1 || failCheck(x) == 1 || failCheck(y) == 1)
+	{
+		printf("Error, incorrect input. \n");
+		return 0;
+	}
+	else if(failCheck(r) == -1 || failCheck(x) == -1 || failCheck(y) == -1)
+	{
+		switch(op)
+		{
+		case 1:
+			op = '+';
+			r = x + y;
+			break;
+		case 2:
+			op = '-';
+			r = x - y;
+			break;
+		case 3:
+			op = '*';
+			r = x * y;
+			break;
+		case 4:
+			op = '/';
+			r = x / y;
+			break;
+		}
+		return show_vars(r);
+	}
+	else
+	{
+		switch(op)
+		{
+		case 1:
+			op = '+';
+			for(i = 0; i < 50; ++i)
+				r[i] = x[i] + y[i];
+			break;
+		case 2:
+			op = '-';
+			for(i = 0; i < 50; ++i)
+				r[i] = x[i] - y[i];
+			break;
+		case 3:
+			op = '*';
+			for(i = 0; i < 50; ++i)
+				r[i] = x[i] * y[i];
+			break;
+		case 4:
+			op = '/';
+			for(i = 0; i < 50; ++i)
+				r[i] = x[i] / y[i];
+			break;
+		}
+		return 0;
+	}
+}
