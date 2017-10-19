@@ -7,13 +7,29 @@
 
 #include "lab2_funcs.h"
 
-void callCommand(char *input)
+void callCommand(char *input1,char *input2,char *input3,char *input4)
 {
-	if(input == "help")
+	if(input1 == "help")
 	{
 		printhelp();
 	}
-	else if(input == "exit")
+	else if(input1 == "exit")
+	{
+		if(compareStrings(input2,"0") == 1 || compareStrings(input2,"") == 1)
+		{
+			exit(0);
+		}
+		else if(atoi(input2) > 0)
+		{
+			exit(atoi(input2));
+		}
+		else
+		{
+			printf("Error: wrong usage of exit.\n");
+			readLine();
+		}
+	}
+	else if(input1 == "quit")
 	{
 		exit(0);
 	}
@@ -47,7 +63,7 @@ int compareStrings(char *string,char *compare)
 }
 
 struct commands commandList[20] =
-{
+{ //name,args,description,number
 		{"exit","","exit this application", 											1},
 		{"exit x","","exit this application with return code x",						2},
 		{"quit","","exit this application",												3},
@@ -90,12 +106,16 @@ int processLine(const char *line)
 
 	while(line[i] != '\0') //Separate input into 4 parts
 	{
-		if(line[i] == ' ')
+		int doOnce = 0;
+		while(line[i] == ' ') //Skip all spaces
 		{
-			partCounter++;
+			if(doOnce == 0)
+			{
+				partCounter++;
+				n=0;
+				doOnce = 1;
+			}
 			i++;
-			n=0;
-			continue;
 		}
 
 		switch(partCounter)
@@ -122,7 +142,7 @@ int processLine(const char *line)
 	{
 		if(compareStrings(commandList[i].name,part1))
 		{
-			callCommand(commandList[i].name);
+			callCommand(commandList[i].name,part2,part3,part4);
 		}
 	}
 
@@ -133,9 +153,16 @@ int processLine(const char *line)
 
 void printhelp(void)
 {
+	int listSize = 0,i = 0;
+
+	while(commandList[i].number)
+	{
+		listSize = commandList[i].number;
+		++i;
+	}
 	printf("Available commands:\n");
 
-	for(int i = 0; i < 4; i++)
+	for(int i = 0; i < listSize; i++)
 	{
 		printf("	%s %s: %s\n",commandList[i].name,commandList[i].args,commandList[i].description);
 	}
@@ -156,7 +183,7 @@ void printhelp(void)
 			"	quit: exit this application\n"
 			"	exit: exit this application\n"
 			"	exit x: exit this application with return code x\n");
-	*/
+	 */
 }
 
 

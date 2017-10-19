@@ -17,6 +17,6 @@ void printhelp(void);
 void readLine(void);
 void init(void);
 int compareStrings(char *string,char *search);
-void callCommand(char *input);
+void callCommand(char *input1,char *input2,char *input3,char *input4);
 
 #endif /* __LAB2_FUNCS_H__ */

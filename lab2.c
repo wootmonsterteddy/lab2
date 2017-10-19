@@ -7,7 +7,17 @@
 
 #include "lab2_funcs.h"
 
+/*TODO:
 
+Lab1 Ex3:
+help
+quit
+exit
+
+
+
+
+ */
 int main(int argc, char *argv[])
 {
 	init();
