@@ -8,16 +8,22 @@
 #include "lab2_funcs.h"
 
 /*TODO:
+- means done
 
 Lab1 Ex3:
-help
-quit
-exit
+help -
+quit -
+exit -
+______________________
 
+Lab2 Ex1:
+find_var -
+find_arr -
+clear -
+set -
 
+*/
 
-
- */
 int main(int argc, char *argv[])
 {
 	init();

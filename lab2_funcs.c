@@ -13,8 +13,95 @@ struct commands commandList[20] =
 		{"exit x","","exit this application with return code x",						2},
 		{"quit","","exit this application",												3},
 		{"help","","shows this message",												4},
-
 };
+struct commands helpList[20] =
+{ //name,args,description,number
+		{"exit","","exit this application", 											1},
+		{"exit x","","exit this application with return code x",						2},
+		{"quit","","exit this application",												3},
+		{"help","","shows this message",												4},
+};
+
+void init(void)
+{
+
+	vars[0].n = 'a';
+	vars[1].n = 'b';
+	vars[2].n = 'c';
+	vars[3].n = 'r';
+	vars[4].n = 'x';
+	vars[5].n = 'y';
+
+	arrs[0].n = 'A';
+	arrs[1].n = 'B';
+	arrs[2].n = 'C';
+	arrs[3].n = 'R';
+	arrs[4].n = 'X';
+	arrs[5].n = 'Y';
+
+}
+
+matlab_var_t *find_var(char var)
+{
+	if(failCheck(var) != -1)
+	{
+		return NULL;
+	}
+	matlab_var_t *result;
+	switch(var)
+	{
+	case 'a':
+		result = &vars[0];
+		break;
+	case 'b':
+		result = &vars[1];
+		break;
+	case 'c':
+		result = &vars[2];
+		break;
+	case 'r':
+		result = &vars[3];
+		break;
+	case 'x':
+		result = &vars[4];
+		break;
+	case 'y':
+		result = &vars[5];
+		break;
+	}
+return result;
+}
+
+matlab_arr_t *find_arr(char var)
+{
+	if(failCheck(var) != 0)
+	{
+		return NULL;
+	}
+	matlab_arr_t *result;
+	switch(var)
+	{
+	case 'A':
+		result = &arrs[0];
+		break;
+	case 'B':
+		result = &arrs[1];
+		break;
+	case 'C':
+		result = &arrs[2];
+		break;
+	case 'R':
+		result = &arrs[3];
+		break;
+	case 'X':
+		result = &arrs[4];
+		break;
+	case 'Y':
+		result = &arrs[5];
+		break;
+	}
+return result;
+}
 
 void callCommand(char *input1,char *input2,char *input3,char *input4)
 {
@@ -69,25 +156,6 @@ int compareStrings(char *string,char *compare)
 		++i;
 	}
 	return 0;
-}
-
-void init(void)
-{
-
-	vars[0].n = 'a';
-	vars[1].n = 'b';
-	vars[2].n = 'c';
-	vars[3].n = 'r';
-	vars[4].n = 'x';
-	vars[5].n = 'y';
-
-	arrs[0].n = 'A';
-	arrs[1].n = 'B';
-	arrs[2].n = 'C';
-	arrs[3].n = 'R';
-	arrs[4].n = 'X';
-	arrs[5].n = 'Y';
-
 }
 
 void readLine(void)
@@ -154,14 +222,17 @@ int processLine(const char *line)
 
 void printhelp(void)
 {
+	unsigned int length = 0, i = 0;
+	while(helpList[i].number)
+	{
+		length = helpList[i].number;
+		i++;
+	}
 	printf("Available commands:\n");
 
-	for(int i = 0; i < 4; ++i)
+	for(int i = 0; i < length; ++i)
 	{
-		if(commandList[i].number != -1)
-		{
-			printf("	%s %s: %s\n",commandList[i].name,commandList[i].args,commandList[i].description);
-		}
+			printf("	%s %s: %s\n",helpList[i].name,helpList[i].args,helpList[i].description);
 	}
 
 	/*
@@ -201,43 +272,50 @@ int failCheck(char var)
 }
 #endif
 
-#if 0
-int clear (char name)
+#if 1
+int clear(char var)
 {
-	int i = 0;
-
-	if(failCheck(name) == 1)
+	if(failCheck(var) == 1)
 	{
-		printf("Error, incorrect usage of function. \n");
+		printf("Error: incorrect usage of function. \n");
 		return 0;
 	}
-	else if(failCheck(name) == -1)
+	else if(failCheck(var) == -1)
 	{
-		name = 0.0;
+		matlab_var_t *variable = find_var(var);
+		variable->v = 0.0;
 	}
-	else if(failCheck(name) == 0)
+	else if(failCheck(var) == 0)
 	{
-		for(i = 0; i < 50; ++i)
+		matlab_arr_t *array = find_arr(var);
+		for(int i = 0; i < 50; ++i)
 		{
-			name[i] = 0.0;
+			array->v[i] = 0.0;
 		}
 	}
 	return 0;
 }
 #endif
 
-#if 0
-double set (char name, double v)
+#if 1
+void set(char var, double v)
 {
-	if(failCheck(name) == -1)
+	if(failCheck(var) == -1)
 	{
-		name = v;
-		return name;
+		matlab_var_t *variable = find_var(var);
+		variable->v = v;
+	}
+	if(failCheck(var) == 0)
+	{
+		matlab_arr_t *array = find_arr(var);
+		for(int i = 0; i < 50; ++i)
+		{
+			array->v[i] = v;
+		}
 	}
 	else
 	{
-		printf("Error, incorrect input. \n");
-		return 0;
+		printf("Error: incorrect input.\n");
 	}
 }
 #endif
