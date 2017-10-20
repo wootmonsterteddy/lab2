@@ -92,7 +92,7 @@ void init(void)
 
 void readLine(void)
 {
-	char input[80];
+	char input[80] = { 0 };
 
 	printf(">> ");
 	fgets(input,80,stdin);
@@ -108,7 +108,7 @@ int processLine(const char *line)
 	while(line[i] != '\0') //Separate input into 4 parts
 	{
 		int doOnce = 0;
-		while(line[i] == ' ') //Skip all spaces
+		while(line[i] == ' ' || line[i] == '\n') //Skip all spaces
 		{
 			if(doOnce == 0)
 			{
@@ -147,7 +147,7 @@ int processLine(const char *line)
 		}
 	}
 
-	printf("%s %s %s %s",part1,part2,part3,part4);
+	printf("%s %s %s %s\n",part1,part2,part3,part4);
 
 	return 0;
 }
