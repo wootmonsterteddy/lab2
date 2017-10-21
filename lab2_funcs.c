@@ -9,22 +9,27 @@
 
 struct commands commandList[20] =
 { //name,args,description,number
-		{"exit","","exit this application", 											1},
-		{"exit x","","exit this application with return code x",						2},
-		{"quit","","exit this application",												3},
-		{"help","","shows this message",												4},
+		{"exit","","exit this application", 																			1},
+		{"exit x","","exit this application with return code x",														2},
+		{"quit","","exit this application",																				3},
+		{"help","","shows this message",																				4},
+		{"show","<var>","shows a scalar or array variable",																5},
+		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",								6},
+		{"clear","<var>","clear the given variable or array by setting all values to 0",								7},
 };
+
 struct commands helpList[20] =
 { //name,args,description,number
-		{"exit","","exit this application", 											1},
-		{"exit x","","exit this application with return code x",						2},
-		{"quit","","exit this application",												3},
-		{"help","","shows this message",												4},
+		{"exit","","exit this application", 																			1},
+		{"exit x","","exit this application with return code x",														2},
+		{"quit","","exit this application",																				3},
+		{"help","","shows this message",																				4},
+		{"show","<var>","shows a scalar or array variable",																5},
+		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",								6},
 };
 
 void init(void)
 {
-
 	vars[0].n = 'a';
 	vars[1].n = 'b';
 	vars[2].n = 'c';
@@ -38,6 +43,20 @@ void init(void)
 	arrs[3].n = 'R';
 	arrs[4].n = 'X';
 	arrs[5].n = 'Y';
+
+	clear('a');
+	clear('b');
+	clear('c');
+	clear('r');
+	clear('x');
+	clear('y');
+
+	clear('A');
+	clear('B');
+	clear('C');
+	clear('R');
+	clear('X');
+	clear('Y');
 
 }
 
@@ -69,7 +88,7 @@ matlab_var_t *find_var(char var)
 		result = &vars[5];
 		break;
 	}
-return result;
+	return result;
 }
 
 matlab_arr_t *find_arr(char var)
@@ -100,7 +119,7 @@ matlab_arr_t *find_arr(char var)
 		result = &arrs[5];
 		break;
 	}
-return result;
+	return result;
 }
 
 void callCommand(char *input1,char *input2,char *input3,char *input4)
@@ -111,13 +130,13 @@ void callCommand(char *input1,char *input2,char *input3,char *input4)
 	}
 	else if(input1 == "exit")
 	{
-		if(compareStrings(input2,"0") == 1 || compareStrings(input2,"") == 1)
+		if(strcmp(input2,"0") == 0 || strcmp(input2,"") == 0)
 		{
 			exit(0);
 		}
-		else if(atoi(input2) > 0)
+		else if(atof(input2) > 0)
 		{
-			exit(atoi(input2));
+			exit(atof(input2));
 		}
 		else
 		{
@@ -127,35 +146,29 @@ void callCommand(char *input1,char *input2,char *input3,char *input4)
 	}
 	else if(input1 == "quit")
 	{
-		exit(0);
+			exit(0);
+	}
+	else if(input1 == "show")
+	{
+		show(*input2);
+	}
+	else if(input1 == "set")
+	{
+		double val = atof(input3);
+		set(*input2,val);
+	}
+	else if(input1 == "clear")
+	{
+		clear(*input2);
+		if(failCheck(*input2) == -1 || failCheck(*input2) == 0)
+		{
+			printf("%c cleared\n",*input2);
+		}
 	}
 	else
 	{
 		printf("Command not found.\n");
 	}
-}
-
-int compareStrings(char *string,char *compare)
-{
-	int i = 0, correct = 0, length = 0;
-
-	while(compare[i] != '\0')
-	{
-		++length;
-		++i;
-	}
-
-	i = 0;
-	while(string[i] == compare[i])
-	{
-		++correct;
-		if(correct == length)
-		{
-			return 1;
-		}
-		++i;
-	}
-	return 0;
 }
 
 void readLine(void)
@@ -170,7 +183,7 @@ void readLine(void)
 
 int processLine(const char *line)
 {
-	char part1[20] = "",part2[20] = "",part3[20] = "",part4[20] = "";
+	char part1[20] = {0},part2[20] = {0},part3[20] = {0},part4[20] = {0};
 	int partCounter = 1, i = 0,n = 0;
 
 	while(line[i] != '\0') //Separate input into 4 parts
@@ -207,15 +220,22 @@ int processLine(const char *line)
 		n++;
 	} //Separation complete
 
-	for(int i = 0; i < 4; ++i)
+	i = 0;
+	int length = 0;
+	while(commandList[i].number)
 	{
-		if(compareStrings(commandList[i].name,part1))
+		++length;
+		++i;
+	}
+	for(int i = 0; i < length; ++i)
+	{
+		if(strcmp(commandList[i].name,part1) == 0)
 		{
 			callCommand(commandList[i].name,part2,part3,part4);
 		}
 	}
 
-	printf("%s %s %s %s\n",part1,part2,part3,part4);
+	//printf("%s %s %s %s\n",part1,part2,part3,part4);
 
 	return 0;
 }
@@ -232,7 +252,7 @@ void printhelp(void)
 
 	for(int i = 0; i < length; ++i)
 	{
-			printf("	%s %s: %s\n",helpList[i].name,helpList[i].args,helpList[i].description);
+		printf("	%s %s: %s\n",helpList[i].name,helpList[i].args,helpList[i].description);
 	}
 
 	/*
@@ -304,19 +324,46 @@ void set(char var, double v)
 	{
 		matlab_var_t *variable = find_var(var);
 		variable->v = v;
+		printf("%c = %G\n",variable->n,variable->v);
 	}
-	if(failCheck(var) == 0)
+	else if(failCheck(var) == 0)
 	{
 		matlab_arr_t *array = find_arr(var);
 		for(int i = 0; i < 50; ++i)
 		{
 			array->v[i] = v;
 		}
+		printf("%c[...] = %G\n",array->n,v);
 	}
 	else
 	{
 		printf("Error: incorrect input.\n");
 	}
+}
+#endif
+
+#if 1
+int show(char name)
+{
+	if(failCheck(name) == -1)
+	{
+		matlab_var_t *variable = find_var(name);
+		printf("%c = %G\n",name,variable->v);
+	}
+	else if(failCheck(name) == 0)
+	{
+		for(int i = 0; i < 50; ++i)
+		{
+			matlab_arr_t *array = find_arr(name);
+			printf("%c[%i] = %G\n",name,i,array->v[i]);
+		}
+	}
+	else
+	{
+		printf("Error: incorrect usage of function.\n");
+		return 0;
+	}
+	return 0;
 }
 #endif
 
@@ -339,31 +386,6 @@ double array (char name, double start, double stop)
 		printf("Error, incorrect usage of function. \n");
 		return 0;
 	}
-}
-#endif
-
-#if 0
-int show(char name)
-{
-	int i = 0;
-
-	if(failCheck(name) == -1)
-	{
-		printf("%d", name);
-	}
-	else if(failCheck(name) == 0)
-	{
-		for(i = 0; i < 50; ++i)
-		{
-			printf("%d", name[i]);
-		}
-	}
-	else
-	{
-		printf("Error, incorrect usage of function. \n");
-		return 0;
-	}
-	return 0;
 }
 #endif
 
@@ -434,3 +456,28 @@ int calc(char r, char x, char y, char op)
 	}
 }
 #endif
+
+/*
+int compareStrings(char *string,char *compare)
+{
+	int i = 0, correct = 0, length = 0;
+
+	while(compare[i] != '\0')
+	{
+		++length;
+		++i;
+	}
+
+	i = 0;
+	while(string[i] == compare[i])
+	{
+		++correct;
+		if(correct == length)
+		{
+			return 1;
+		}
+		++i;
+	}
+	return 0;
+}
+ */

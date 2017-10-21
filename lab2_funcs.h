@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <strings.h>
 #include <string.h>
 #include <math.h>
 #include "lab2.h"
@@ -16,9 +17,9 @@ int processLine(const char *line);
 void printhelp(void);
 void readLine(void);
 void init(void);
-int compareStrings(char *string,char *search);
 void callCommand(char *input1,char *input2,char *input3,char *input4);
 void set (char var, double v);
 int failCheck(char var);
+//int compareStrings(char *string,char *search);
 
 #endif /* __LAB2_FUNCS_H__ */

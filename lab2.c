@@ -21,6 +21,7 @@ find_var -
 find_arr -
 clear -
 set -
+show -
 
 */
 
@@ -28,7 +29,7 @@ int main(int argc, char *argv[])
 {
 	init();
 
-	while(1)
+	while(argc == 1)
 	{
 		readLine();
 	}
