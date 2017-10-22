@@ -383,6 +383,7 @@ int show(char name)
 }
 #endif
 
+<<<<<<< HEAD
 #if 1
 int array (char name, double start, double stop)
 {
@@ -396,6 +397,20 @@ int array (char name, double start, double stop)
 		for(int i = 1; i < 49; ++i)
 		{
 			array->v[i] = start + (temp * (double) i);
+=======
+#if 0
+double array (char var, double start, double stop)
+{
+	int i = 0, temp;
+
+	if(failCheck(var) == 0)
+	{
+		temp = (stop - start) / 50;
+		matlab_arr_t *array = find_arr(var);
+		for(i = 0; i < 50; ++i)
+		{
+			array->v[i] = start + (temp * i);
+>>>>>>> 00a6ba77ad851c6825b00c1ffda6b5ed8b9f030c
 		}
 		return 0;
 	}
