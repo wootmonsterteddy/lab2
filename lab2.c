@@ -9,6 +9,7 @@
 
 /*TODO:
 - means done
+* not done
 
 Lab1 Ex3:
 help -
@@ -22,6 +23,7 @@ find_arr -
 clear -
 set -
 show -
+array *
 
 */
 
