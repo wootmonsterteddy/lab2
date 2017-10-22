@@ -426,7 +426,7 @@ double array (char var, double start, double stop)
 }
 #endif
 
-#if 0
+#if 1
 int calc(char r, char x, char y, char op)
 {
 	int i = 0;
@@ -451,19 +451,19 @@ int calc(char r, char x, char y, char op)
 		{
 		case 1:
 			op = '+';
-			r = x + y;
+			variable1->v = variable2->v + variable3->v;
 			break;
 		case 2:
 			op = '-';
-			r = x - y;
+			variable1->v = variable2->v - variable3->v;
 			break;
 		case 3:
 			op = '*';
-			r = x * y;
+			variable1->v = variable2->v * variable3->v;
 			break;
 		case 4:
 			op = '/';
-			r = x / y;
+			variable1->v = variable2->v / variable3->v;
 			break;
 		}
 		return show(r);
@@ -478,22 +478,22 @@ int calc(char r, char x, char y, char op)
 		case 1:
 			op = '+';
 			for(i = 0; i < 50; ++i)
-				r[i] = x[i] + y[i];
+				array1->v[i] = array2->v[i] + array3->v[i];
 			break;
 		case 2:
 			op = '-';
 			for(i = 0; i < 50; ++i)
-				r[i] = x[i] - y[i];
+				array1->v[i] = array2->v[i] - array3->v[i];
 			break;
 		case 3:
 			op = '*';
 			for(i = 0; i < 50; ++i)
-				r[i] = x[i] * y[i];
+				array1->v[i] = array2->v[i] * array3->v[i];
 			break;
 		case 4:
 			op = '/';
 			for(i = 0; i < 50; ++i)
-				r[i] = x[i] / y[i];
+				array1->v[i] = array2->v[i] / array3->v[i];
 			break;
 		}
 		return show(r);
