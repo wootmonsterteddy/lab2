@@ -146,7 +146,7 @@ void callCommand(char *input1,char *input2,char *input3,char *input4)
 	}
 	else if(input1 == "quit")
 	{
-			exit(0);
+		exit(0);
 	}
 	else if(input1 == "show")
 	{
@@ -368,16 +368,17 @@ int show(char name)
 #endif
 
 #if 0
-double array (char name, double start, double stop)
+double array (char var, double start, double stop)
 {
 	int i = 0, temp;
 
-	if(failCheck(name) == 0)
+	if(failCheck(var) == 0)
 	{
 		temp = (stop - start) / 50;
+		matlab_arr_t *array = find_arr(var);
 		for(i = 0; i < 50; ++i)
 		{
-			name[i] = start + (temp * i);
+			array->v[i] = start + (temp * i);
 		}
 		return name;
 	}
