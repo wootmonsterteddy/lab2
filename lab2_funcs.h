@@ -20,6 +20,5 @@ void init(void);
 void callCommand(char *input1,char *input2,char *input3,char *input4);
 void set (char var, double v);
 int failCheck(char var);
-//int compareStrings(char *string,char *search);
 
 #endif /* __LAB2_FUNCS_H__ */
