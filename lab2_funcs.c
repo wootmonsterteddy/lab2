@@ -178,8 +178,8 @@ void callCommand(char *input1,char *input2,char *input3,char *input4)
 		}
 		else
 		{
-			double number1 = atof(*input3);
-			double number2 = atof(*input4);
+			double number1 = atof(input3);
+			double number2 = atof(input4);
 			array(*input2,number1,number2);
 		}
 	}
@@ -388,14 +388,14 @@ int array (char name, double start, double stop)
 {
 	if(failCheck(name) == 0)
 	{
-		int temp;
+		double temp;
 		matlab_arr_t *array = find_arr(name);
 		array->v[0] = start;
 		array->v[49] = stop;
-		temp = (stop - start) / 48;
-		for(int i = 1; i < 48; ++i)
+		temp = (stop - start) / 49;
+		for(int i = 1; i < 49; ++i)
 		{
-			array->v[i] = start + (temp * i);
+			array->v[i] = start + (temp * (double) i);
 		}
 		return 0;
 	}
@@ -412,15 +412,15 @@ int calc(char r, char x, char y, char op)
 {
 	int i = 0;
 
-	if( op != '+' || op != '-' || op != '*' || op != '/' || op != '!')
+	if( op != '+' || op != '-' || op != '*' || op != '/')
 	{
 		printf("Error, operator does not exist \n");
-		return 0;
+		return 1;
 	}
 	else if(failCheck(r) == 1 || failCheck(x) == 1 || failCheck(y) == 1)
 	{
-		printf("Error, incorrect input. \n");
-		return 0;
+		printf("Error: incorrect input.\n");
+		return 1;
 	}
 	else if(failCheck(r) == -1 || failCheck(x) == -1 || failCheck(y) == -1)
 	{

@@ -23,7 +23,11 @@ find_arr -
 clear -
 set -
 show -
-array *
+array -
+______________________
+
+Lab2 Ex2:
+calc *
 
 */
 
