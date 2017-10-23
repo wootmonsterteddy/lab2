@@ -9,23 +9,26 @@
 
 struct commands commandList[20] =
 { //name,args,description,number
-		{"exit","","exit this application", 																			1},
-		{"exit x","","exit this application with return code x",														2},
-		{"quit","","exit this application",																				3},
-		{"help","","shows this message",																				4},
-		{"show","<var>","shows a scalar or array variable",																5},
-		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",								6},
-		{"clear","<var>","clear the given variable or array by setting all values to 0",								7},
+		{"exit","","exit this application", 																																1},
+		{"exit x","","exit this application with return code x",																											2},
+		{"quit","","exit this application",																																	3},
+		{"help","","shows this message",																																	4},
+		{"show","<var>","shows a scalar or array variable",																													5},
+		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",																					6},
+		{"clear","<var>","clear the given variable or array by setting all values to 0",																					7},
+		{"array","<var> <start> <stop>","fill array <var> with first value <start> and last value <stop> with values between at equal steps",								8},
 };
 
 struct commands helpList[20] =
 { //name,args,description,number
-		{"exit","","exit this application", 																			1},
-		{"exit x","","exit this application with return code x",														2},
-		{"quit","","exit this application",																				3},
-		{"help","","shows this message",																				4},
-		{"show","<var>","shows a scalar or array variable",																5},
-		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",								6},
+		{"exit","","exit this application", 																																1},
+		{"exit x","","exit this application with return code x",																											2},
+		{"quit","","exit this application",																																	3},
+		{"help","","shows this message",																																	4},
+		{"show","<var>","shows a scalar or array variable",																													5},
+		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",																					6},
+		{"clear","<var>","clear the given variable or array by setting all values to 0",																					7},
+		{"array","<var> <start> <stop>","fill array <var> with first value <start> and last value <stop> with values between at equal steps",								8},
 };
 
 void init(void)
@@ -58,6 +61,7 @@ void init(void)
 	clear('X');
 	clear('Y');
 
+	printf("MINIMatlab started. Type 'help' for a list of commands.\n");
 }
 
 matlab_var_t *find_var(char var)
@@ -146,7 +150,7 @@ void callCommand(char *input1,char *input2,char *input3,char *input4)
 	}
 	else if(input1 == "quit")
 	{
-			exit(0);
+		exit(0);
 	}
 	else if(input1 == "show")
 	{
@@ -163,6 +167,20 @@ void callCommand(char *input1,char *input2,char *input3,char *input4)
 		if(failCheck(*input2) == -1 || failCheck(*input2) == 0)
 		{
 			printf("%c cleared\n",*input2);
+		}
+	}
+	else if(input1 == "array")
+	{
+		if(*input3 == NULL || *input4 == NULL)
+		{
+			printf("Error: wrong usage of function.\n");
+			return;
+		}
+		else
+		{
+			double number1 = atof(input3);
+			double number2 = atof(input4);
+			array(*input2,number1,number2);
 		}
 	}
 	else
@@ -266,8 +284,6 @@ void printhelp(void)
 			"	importCSV <var> <filename>: Imports variables from the CSV file <filename> and stores in array <var>\n"
 			"	exportCSV <filename>: Saves a variables into the CSV file <filename>\n"
 			"	exportMAT <filename>: Saves a variables into the JSON file <filename>\n"
-			"	exportJSON <filename>: Saves a variables into the JSON file <filename>\n"
-			"	exportXML <filename>: Saves a variables into the XML file <filename>\n"
 			"	quit: exit this application\n"
 			"	exit: exit this application\n"
 			"	exit x: exit this application with return code x\n");
@@ -324,7 +340,7 @@ void set(char var, double v)
 	{
 		matlab_var_t *variable = find_var(var);
 		variable->v = v;
-		printf("%c = %G\n",variable->n,variable->v);
+		printf("%c = %G\n", variable->n, variable->v);
 	}
 	else if(failCheck(var) == 0)
 	{
@@ -333,7 +349,7 @@ void set(char var, double v)
 		{
 			array->v[i] = v;
 		}
-		printf("%c[...] = %G\n",array->n,v);
+		printf("%c[...] = %G\n", array->n, v);
 	}
 	else
 	{
@@ -348,14 +364,14 @@ int show(char name)
 	if(failCheck(name) == -1)
 	{
 		matlab_var_t *variable = find_var(name);
-		printf("%c = %G\n",name,variable->v);
+		printf("%c = %G\n", name, variable->v);
 	}
 	else if(failCheck(name) == 0)
 	{
-		for(int i = 0; i < 50; ++i)
+		for(int i = 0; i < 49; ++i)
 		{
 			matlab_arr_t *array = find_arr(name);
-			printf("%c[%i] = %G\n",name,i,array->v[i]);
+			printf("%c[%i] = %G\n", name, i, array->v[i]);
 		}
 	}
 	else
@@ -367,117 +383,120 @@ int show(char name)
 }
 #endif
 
+//<<<<<<< HEAD
 #if 0
-double array (char name, double start, double stop)
+int array (char name, double start, double stop)
+{
+	if(failCheck(name) == 0)
+	{
+		double temp;
+		matlab_arr_t *array = find_arr(name);
+		array->v[0] = start;
+		array->v[49] = stop;
+		temp = (stop - start) / 49;
+		for(int i = 1; i < 49; ++i)
+		{
+			array->v[i] = start + (temp * (double) i);
+			=======
+		}
+	}
+}
+#endif
+#if 0
+double array (char var, double start, double stop)
 {
 	int i = 0, temp;
 
-	if(failCheck(name) == 0)
+	if(failCheck(var) == 0)
 	{
 		temp = (stop - start) / 50;
-		for(i = 0; i < 50; ++i)
+		matlab_arr_t *array = find_arr(var);
+		for(i = 0; i < 49; ++i)
 		{
-			name[i] = start + (temp * i);
+			array->v[i] = start + (temp * i);
+			//>>>>>>> 00a6ba77ad851c6825b00c1ffda6b5ed8b9f030c
 		}
-		return name;
+		return 0;
 	}
 	else
 	{
-		printf("Error, incorrect usage of function. \n");
-		return 0;
+		printf("Error: wrong usage of function.\n");
+		return 1;
 	}
 }
 #endif
 
-#if 0
+#if 1
 int calc(char r, char x, char y, char op)
 {
 	int i = 0;
 
-	if( op != '+' || op != '-' || op != '*' || op != '/' || op != '!')
+	if( op != '+' || op != '-' || op != '*' || op != '/')
 	{
 		printf("Error, operator does not exist \n");
-		return 0;
+		return 1;
 	}
 	else if(failCheck(r) == 1 || failCheck(x) == 1 || failCheck(y) == 1)
 	{
-		printf("Error, incorrect input. \n");
-		return 0;
+		printf("Error: incorrect input.\n");
+		return 1;
 	}
 	else if(failCheck(r) == -1 || failCheck(x) == -1 || failCheck(y) == -1)
 	{
+		matlab_var_t *variable1 = find_var(r);
+		matlab_var_t *variable2 = find_var(x);
+		matlab_var_t *variable3 = find_var(y);
+
 		switch(op)
 		{
 		case 1:
 			op = '+';
-			r = x + y;
+			variable1->v = variable2->v + variable3->v;
 			break;
 		case 2:
 			op = '-';
-			r = x - y;
+			variable1->v = variable2->v - variable3->v;
 			break;
 		case 3:
 			op = '*';
-			r = x * y;
+			variable1->v = variable2->v * variable3->v;
 			break;
 		case 4:
 			op = '/';
-			r = x / y;
+			variable1->v = variable2->v / variable3->v;
 			break;
 		}
-		return show_vars(r);
+		return show(r);
 	}
 	else
 	{
+		matlab_arr_t *array1 = find_arr(r);
+		matlab_arr_t *array2 = find_arr(x);
+		matlab_arr_t *array3 = find_arr(y);
 		switch(op)
 		{
 		case 1:
 			op = '+';
 			for(i = 0; i < 50; ++i)
-				r[i] = x[i] + y[i];
+				array1->v[i] = array2->v[i] + array3->v[i];
 			break;
 		case 2:
 			op = '-';
 			for(i = 0; i < 50; ++i)
-				r[i] = x[i] - y[i];
+				array1->v[i] = array2->v[i] - array3->v[i];
 			break;
 		case 3:
 			op = '*';
 			for(i = 0; i < 50; ++i)
-				r[i] = x[i] * y[i];
+				array1->v[i] = array2->v[i] * array3->v[i];
 			break;
 		case 4:
 			op = '/';
 			for(i = 0; i < 50; ++i)
-				r[i] = x[i] / y[i];
+				array1->v[i] = array2->v[i] / array3->v[i];
 			break;
 		}
-		return 0;
+		return show(r);
 	}
 }
 #endif
-
-/*
-int compareStrings(char *string,char *compare)
-{
-	int i = 0, correct = 0, length = 0;
-
-	while(compare[i] != '\0')
-	{
-		++length;
-		++i;
-	}
-
-	i = 0;
-	while(string[i] == compare[i])
-	{
-		++correct;
-		if(correct == length)
-		{
-			return 1;
-		}
-		++i;
-	}
-	return 0;
-}
- */
