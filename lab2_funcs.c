@@ -383,7 +383,10 @@ int show(char name)
 }
 #endif
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 64c9a96e3b3f58ed80d4fcff88f1a5bca90acfad
 #if 1
 int array (char name, double start, double stop)
 {
@@ -398,6 +401,12 @@ int array (char name, double start, double stop)
 		{
 			array->v[i] = start + (temp * (double) i);
 		}
+		return 0;
+	}
+	else
+	{
+		printf("Error: wrong usage of function.\n");
+		return 1;
 	}
 }
 #endif
