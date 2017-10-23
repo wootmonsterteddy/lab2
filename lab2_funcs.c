@@ -203,7 +203,7 @@ void readLine(void)
 
 int processLine(const char *line)
 {
-	char part1[20] = {0}, part2[20] = {0}, part3[20] = {0}, part4[20] = {0};
+	char part1[20] = {0}, part2[20] = {0}, part3[20] = {0}, part4[20] = {0}, part5[20] = {0};
 	int partCounter = 1, i = 0,n = 0;
 
 	while(line[i] != '\0') //Separate input into 4 parts
@@ -234,6 +234,9 @@ int processLine(const char *line)
 		case 4:
 			part4[n] = line[i];
 			break;
+		case 5:
+			part5[n] = line[i];
+			break;
 		}
 
 		i++;
@@ -256,7 +259,7 @@ int processLine(const char *line)
 		}
 		else if(failCheck(part1) == -1 || failCheck(part1) == 0 || part1[1] == '=')
 		{
-			callCommand(commandList[i].name, part1, part2, part3, part4);
+			callCommand(commandList[i].name, part2, part3, part4, part5);
 			break;
 		}
 	}
