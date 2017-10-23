@@ -340,7 +340,7 @@ void set(char var, double v)
 	{
 		matlab_var_t *variable = find_var(var);
 		variable->v = v;
-		printf("%c = %G\n",variable->n,variable->v);
+		printf("%c = %G\n", variable->n, variable->v);
 	}
 	else if(failCheck(var) == 0)
 	{
@@ -349,7 +349,7 @@ void set(char var, double v)
 		{
 			array->v[i] = v;
 		}
-		printf("%c[...] = %G\n",array->n,v);
+		printf("%c[...] = %G\n", array->n, v);
 	}
 	else
 	{
@@ -364,14 +364,14 @@ int show(char name)
 	if(failCheck(name) == -1)
 	{
 		matlab_var_t *variable = find_var(name);
-		printf("%c = %G\n",name,variable->v);
+		printf("%c = %G\n", name, variable->v);
 	}
 	else if(failCheck(name) == 0)
 	{
-		for(int i = 0; i < 50; ++i)
+		for(int i = 0; i < 49; ++i)
 		{
 			matlab_arr_t *array = find_arr(name);
-			printf("%c[%i] = %G\n",name,i,array->v[i]);
+			printf("%c[%i] = %G\n", name, i, array->v[i]);
 		}
 	}
 	else
@@ -383,8 +383,8 @@ int show(char name)
 }
 #endif
 
-<<<<<<< HEAD
-#if 1
+//<<<<<<< HEAD
+#if 0
 int array (char name, double start, double stop)
 {
 	if(failCheck(name) == 0)
@@ -397,7 +397,11 @@ int array (char name, double start, double stop)
 		for(int i = 1; i < 49; ++i)
 		{
 			array->v[i] = start + (temp * (double) i);
-=======
+			=======
+		}
+	}
+}
+#endif
 #if 0
 double array (char var, double start, double stop)
 {
@@ -407,10 +411,10 @@ double array (char var, double start, double stop)
 	{
 		temp = (stop - start) / 50;
 		matlab_arr_t *array = find_arr(var);
-		for(i = 0; i < 50; ++i)
+		for(i = 0; i < 49; ++i)
 		{
 			array->v[i] = start + (temp * i);
->>>>>>> 00a6ba77ad851c6825b00c1ffda6b5ed8b9f030c
+			//>>>>>>> 00a6ba77ad851c6825b00c1ffda6b5ed8b9f030c
 		}
 		return 0;
 	}
@@ -422,7 +426,7 @@ double array (char var, double start, double stop)
 }
 #endif
 
-#if 0
+#if 1
 int calc(char r, char x, char y, char op)
 {
 	int i = 0;
@@ -439,53 +443,60 @@ int calc(char r, char x, char y, char op)
 	}
 	else if(failCheck(r) == -1 || failCheck(x) == -1 || failCheck(y) == -1)
 	{
+		matlab_var_t *variable1 = find_var(r);
+		matlab_var_t *variable2 = find_var(x);
+		matlab_var_t *variable3 = find_var(y);
+
 		switch(op)
 		{
 		case 1:
 			op = '+';
-			r = x + y;
+			variable1->v = variable2->v + variable3->v;
 			break;
 		case 2:
 			op = '-';
-			r = x - y;
+			variable1->v = variable2->v - variable3->v;
 			break;
 		case 3:
 			op = '*';
-			r = x * y;
+			variable1->v = variable2->v * variable3->v;
 			break;
 		case 4:
 			op = '/';
-			r = x / y;
+			variable1->v = variable2->v / variable3->v;
 			break;
 		}
-		return show_vars(r);
+		return show(r);
 	}
 	else
 	{
+		matlab_arr_t *array1 = find_arr(r);
+		matlab_arr_t *array2 = find_arr(x);
+		matlab_arr_t *array3 = find_arr(y);
 		switch(op)
 		{
 		case 1:
 			op = '+';
 			for(i = 0; i < 50; ++i)
-				r[i] = x[i] + y[i];
+				array1->v[i] = array2->v[i] + array3->v[i];
 			break;
 		case 2:
 			op = '-';
 			for(i = 0; i < 50; ++i)
-				r[i] = x[i] - y[i];
+				array1->v[i] = array2->v[i] - array3->v[i];
 			break;
 		case 3:
 			op = '*';
 			for(i = 0; i < 50; ++i)
-				r[i] = x[i] * y[i];
+				array1->v[i] = array2->v[i] * array3->v[i];
 			break;
 		case 4:
 			op = '/';
 			for(i = 0; i < 50; ++i)
-				r[i] = x[i] / y[i];
+				array1->v[i] = array2->v[i] / array3->v[i];
 			break;
 		}
-		return 0;
+		return show(r);
 	}
 }
 #endif
