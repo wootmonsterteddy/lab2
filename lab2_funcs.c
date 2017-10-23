@@ -17,7 +17,9 @@ struct commands commandList[20] =
 		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",																					6},
 		{"clear","<var>","clear the given variable or array by setting all values to 0",																					7},
 		{"array","<var> <start> <stop>","fill array <var> with first value <start> and last value <stop> with values between at equal steps",								8},
-		{"calc","<var> <value1> <value2> <operator>","set the first array or scalar, <var>, to <value1> <operator> <value2>. Element by element if it is an array.", 		9},
+		{"calc","<var> <value1> <value2> <operator>","set the first array or scalar, <var>, to <value1> <operator> <value2>. Element by element if it is an array", 		9},
+		{"importCSV","<var> <filename>","Imports variables from the CSV file <filename> and stores in array <var>", 														10},
+		{"exportCSV","<var> <filename>","Exports a variable <var> into the CSV file <filename>", 																			11},
 };
 
 struct commands helpList[20] =
@@ -31,6 +33,8 @@ struct commands helpList[20] =
 		{"clear","<var>","clear the given variable or array by setting all values to 0",																					7},
 		{"array","<var> <start> <stop>","fill array <var> with first value <start> and last value <stop> with values between at equal steps",								8},
 		{"calc","<var> <value1> <value2> <operator>","set the first array or scalar, <var>, to <value1> <operator> <value2>. Element by element if it is an array.", 		9},
+		{"importCSV","<var> <filename>","Imports variables from the CSV file <filename> and stores in array <var>", 														10},
+		{"exportCSV","<var> <filename>","Exports a variable <var> into the CSV file <filename>", 																			11},
 };
 
 void init(void)
@@ -176,7 +180,6 @@ void callCommand(char *input1, char *input2, char *input3, char *input4, char *i
 		if(*input3 == NULL || *input4 == NULL || *input5 != NULL)
 		{
 			printf("Error: wrong usage of function.\n");
-			return;
 		}
 		else
 		{
@@ -185,9 +188,17 @@ void callCommand(char *input1, char *input2, char *input3, char *input4, char *i
 			array(*input2,number1,number2);
 		}
 	}
+	else if(input1 == "importCSV")
+	{
+		importCSV(input2,input3);
+	}
+	else if(input1 == "exportCSV")
+	{
+		exportCSV(input2,input3);
+	}
 	else
 	{
-		printf("Command not found.\n");
+		printf("Error: command not found.\n");
 	}
 }
 
@@ -264,7 +275,7 @@ int processLine(const char *line)
 		}
 	}
 
-	printf("%s %s %s %s %s\n", part1, part2, part3, part4, part5);
+	//printf("%s %s %s %s %s\n", part1, part2, part3, part4, part5);
 
 	return 0;
 }
@@ -491,18 +502,63 @@ double sin (char x, char y)
 }
 #endif
 
-<<<<<<< HEAD
 void importCSV(const char *var,const char *filename)
 {
+	if(failCheck(*var) != 0)
+	{
+		printf("Error: wrong usage of function.\n");
+		return;
+	}
 
+	FILE *inputFile = fopen(filename,"r");
+
+	if(inputFile == NULL)
+	{
+		printf("Error: file could not be opened.\n");
+		return;
+	}
+
+	matlab_arr_t *array = find_arr(*var);
+	char buffer[256] = {0};
+
+	for(int i = 0; i < 50; ++i)
+	{
+		fgets(buffer,sizeof(buffer)-1,inputFile);
+		if(*buffer == EOF)
+		{
+			break;
+		}
+		else
+		{
+			array->v[i] = atof(buffer);
+		}
+	}
+
+	fclose(inputFile);
 }
-=======
 
+void exportCSV(const char *var,const char *filename)
+{
+	if(failCheck(*var) != 0)
+	{
+		printf("Error: wrong usage of function.\n");
+		return;
+	}
 
+	FILE *outputFile = fopen(filename,"w");
 
+	if(outputFile == NULL)
+	{
+		printf("Error: file could not be opened.\n");
+		return;
+	}
 
+	matlab_arr_t *array = find_arr(*var);
 
+	for(int i = 0; i < 50; ++i)
+	{
+		fprintf(outputFile,"%G\n",array->v[i]);
+	}
 
-
-
->>>>>>> 64bb363cc12e4c955523f8441db09743cc8f5bc0
+	fclose(outputFile);
+}

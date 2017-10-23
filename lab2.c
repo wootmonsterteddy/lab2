@@ -24,8 +24,8 @@ clear -
 set -
 show -
 array -
-importCSV *
-exportCSV *
+importCSV -
+exportCSV -
 ______________________
 
 Lab2 Ex2:
