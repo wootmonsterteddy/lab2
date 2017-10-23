@@ -368,7 +368,7 @@ int show(char name)
 	}
 	else if(failCheck(name) == 0)
 	{
-		for(int i = 0; i < 49; ++i)
+		for(int i = 0; i < 50; ++i)
 		{
 			matlab_arr_t *array = find_arr(name);
 			printf("%c[%i] = %G\n", name, i, array->v[i]);
@@ -383,6 +383,10 @@ int show(char name)
 }
 #endif
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 64c9a96e3b3f58ed80d4fcff88f1a5bca90acfad
 #if 1
 int array (char name, double start, double stop)
 {
@@ -418,7 +422,6 @@ double array (char var, double start, double stop)
 		for(i = 0; i < 49; ++i)
 		{
 			array->v[i] = start + (temp * i);
-			//>>>>>>> 00a6ba77ad851c6825b00c1ffda6b5ed8b9f030c
 		}
 		return 0;
 	}
