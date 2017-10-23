@@ -126,7 +126,7 @@ matlab_arr_t *find_arr(char var)
 	return result;
 }
 
-void callCommand(char *input1,char *input2,char *input3,char *input4)
+void callCommand(char *input1, char *input2, char *input3, char *input4)
 {
 	if(input1 == "help")
 	{
@@ -159,14 +159,14 @@ void callCommand(char *input1,char *input2,char *input3,char *input4)
 	else if(input1 == "set")
 	{
 		double val = atof(input3);
-		set(*input2,val);
+		set(*input2, val);
 	}
 	else if(input1 == "clear")
 	{
 		clear(*input2);
 		if(failCheck(*input2) == -1 || failCheck(*input2) == 0)
 		{
-			printf("%c cleared\n",*input2);
+			printf("%c cleared\n", *input2);
 		}
 	}
 	else if(input1 == "array")
@@ -201,7 +201,7 @@ void readLine(void)
 
 int processLine(const char *line)
 {
-	char part1[20] = {0},part2[20] = {0},part3[20] = {0},part4[20] = {0};
+	char part1[20] = {0}, part2[20] = {0}, part3[20] = {0}, part4[20] = {0};
 	int partCounter = 1, i = 0,n = 0;
 
 	while(line[i] != '\0') //Separate input into 4 parts
@@ -247,9 +247,9 @@ int processLine(const char *line)
 	}
 	for(int i = 0; i < length; ++i)
 	{
-		if(strcmp(commandList[i].name,part1) == 0)
+		if(strcmp(commandList[i].name, part1) == 0)
 		{
-			callCommand(commandList[i].name,part2,part3,part4);
+			callCommand(commandList[i].name, part2, part3, part4);
 		}
 	}
 
@@ -270,7 +270,7 @@ void printhelp(void)
 
 	for(int i = 0; i < length; ++i)
 	{
-		printf("	%s %s: %s\n",helpList[i].name,helpList[i].args,helpList[i].description);
+		printf("	%s %s: %s\n", helpList[i].name, helpList[i].args, helpList[i].description);
 	}
 
 	/*
