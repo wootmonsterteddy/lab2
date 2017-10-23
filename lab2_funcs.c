@@ -173,7 +173,7 @@ void callCommand(char *input1, char *input2, char *input3, char *input4, char *i
 	}
 	else if(input1 == "array")
 	{
-		if(*input3 == NULL || *input4 == NULL)
+		if(*input3 == NULL || *input4 == NULL || *input5 != NULL)
 		{
 			printf("Error: wrong usage of function.\n");
 			return;
@@ -254,7 +254,7 @@ int processLine(const char *line)
 	{
 		if(strcmp(commandList[i].name, part1) == 0)
 		{
-			callCommand(commandList[i].name, part2, part3, part4);
+			callCommand(commandList[i].name, part2, part3, part4, part5);
 			break;
 		}
 		else if(failCheck(part1) == -1 || failCheck(part1) == 0 || part1[1] == '=')
