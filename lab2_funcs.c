@@ -368,7 +368,7 @@ int show(char name)
 	}
 	else if(failCheck(name) == 0)
 	{
-		for(int i = 0; i < 49; ++i)
+		for(int i = 0; i < 50; ++i)
 		{
 			matlab_arr_t *array = find_arr(name);
 			printf("%c[%i] = %G\n", name, i, array->v[i]);
