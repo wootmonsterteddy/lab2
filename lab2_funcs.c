@@ -17,6 +17,7 @@ struct commands commandList[20] =
 		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",																					6},
 		{"clear","<var>","clear the given variable or array by setting all values to 0",																					7},
 		{"array","<var> <start> <stop>","fill array <var> with first value <start> and last value <stop> with values between at equal steps",								8},
+		{"calc","<var> <value1> <value2> <operator>","set the first array or scalar, <var>, to <value1> <operator> <value2>. Element by element if it is an array.", 		9},
 };
 
 struct commands helpList[20] =
@@ -29,6 +30,7 @@ struct commands helpList[20] =
 		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",																					6},
 		{"clear","<var>","clear the given variable or array by setting all values to 0",																					7},
 		{"array","<var> <start> <stop>","fill array <var> with first value <start> and last value <stop> with values between at equal steps",								8},
+		{"calc","<var> <value1> <value2> <operator>","set the first array or scalar, <var>, to <value1> <operator> <value2>. Element by element if it is an array.", 		9},
 };
 
 void init(void)
@@ -250,10 +252,12 @@ int processLine(const char *line)
 		if(strcmp(commandList[i].name, part1) == 0)
 		{
 			callCommand(commandList[i].name, part2, part3, part4);
+			break;
 		}
-		else
+		else if(failCheck(part1) == -1 || failCheck(part1) == 0 || part1[1] == '=')
 		{
-			//calc function
+			callCommand(commandList[i].name, part1, part2, part3, part4);
+			break;
 		}
 	}
 
@@ -294,7 +298,7 @@ void printhelp(void)
 	 */
 }
 
-#if 1
+
 int failCheck(char var)
 {
 	if((var >= 'a' && var <= 'c') || var == 'r' || var == 'x' || var == 'y')
@@ -310,9 +314,7 @@ int failCheck(char var)
 		return 1;
 	}
 }
-#endif
 
-#if 1
 int clear(char var)
 {
 	if(failCheck(var) == 1)
@@ -335,9 +337,7 @@ int clear(char var)
 	}
 	return 0;
 }
-#endif
 
-#if 1
 void set(char var, double v)
 {
 	if(failCheck(var) == -1)
@@ -360,9 +360,7 @@ void set(char var, double v)
 		printf("Error: incorrect input.\n");
 	}
 }
-#endif
 
-#if 1
 int show(char name)
 {
 	if(failCheck(name) == -1)
@@ -385,8 +383,7 @@ int show(char name)
 	}
 	return 0;
 }
-#endif
-#if 1
+
 int array (char name, double start, double stop)
 {
 	if(failCheck(name) == 0)
@@ -408,9 +405,7 @@ int array (char name, double start, double stop)
 		return 1;
 	}
 }
-#endif
 
-#if 1
 int calc(char r, char x, char y, char op)
 {
 	int i = 0;
@@ -483,4 +478,21 @@ int calc(char r, char x, char y, char op)
 		return show(r);
 	}
 }
+#if 0
+double sin (char x, char y)
+{
+
+
+
+	return 0;
+}
 #endif
+
+
+
+
+
+
+
+
+
