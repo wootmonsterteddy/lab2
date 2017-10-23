@@ -484,3 +484,8 @@ int calc(char r, char x, char y, char op)
 	}
 }
 #endif
+
+void importCSV(const char *var,const char *filename)
+{
+
+}
