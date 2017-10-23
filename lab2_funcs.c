@@ -382,11 +382,6 @@ int show(char name)
 	return 0;
 }
 #endif
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 64c9a96e3b3f58ed80d4fcff88f1a5bca90acfad
 #if 1
 int array (char name, double start, double stop)
 {
