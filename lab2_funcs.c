@@ -436,57 +436,49 @@ int calc(char r, char x, char y, char op)
 	}
 	else if(failCheck(r) == -1 || failCheck(x) == -1 || failCheck(y) == -1)
 	{
-		matlab_var_t *variable1 = find_var(r);
-		matlab_var_t *variable2 = find_var(x);
-		matlab_var_t *variable3 = find_var(y);
+		matlab_var_t *result = find_var(r);
+		matlab_var_t *var1 = find_var(x);
+		matlab_var_t *var2 = find_var(y);
 
 		switch(op)
 		{
-		case 1:
-			op = '+';
-			variable1->v = variable2->v + variable3->v;
+		case '+':
+			result->v = var1->v + var2->v;
 			break;
-		case 2:
-			op = '-';
-			variable1->v = variable2->v - variable3->v;
+		case '-':
+			result->v = var1->v - var2->v;
 			break;
-		case 3:
-			op = '*';
-			variable1->v = variable2->v * variable3->v;
+		case '*':
+			result->v = var1->v * var2->v;
 			break;
-		case 4:
-			op = '/';
-			variable1->v = variable2->v / variable3->v;
+		case '/':
+			result->v = var1->v / var2->v;
 			break;
 		}
 		return show(r);
 	}
 	else
 	{
-		matlab_arr_t *array1 = find_arr(r);
-		matlab_arr_t *array2 = find_arr(x);
-		matlab_arr_t *array3 = find_arr(y);
+		matlab_arr_t *result = find_arr(r);
+		matlab_arr_t *array1 = find_arr(x);
+		matlab_arr_t *array2 = find_arr(y);
 		switch(op)
 		{
-		case 1:
-			op = '+';
+		case '+':
 			for(i = 0; i < 50; ++i)
-				array1->v[i] = array2->v[i] + array3->v[i];
+				result->v[i] = array1->v[i] + array2->v[i];
 			break;
-		case 2:
-			op = '-';
+		case '-':
 			for(i = 0; i < 50; ++i)
-				array1->v[i] = array2->v[i] - array3->v[i];
+				result->v[i] = array1->v[i] - array2->v[i];
 			break;
-		case 3:
-			op = '*';
+		case '*':
 			for(i = 0; i < 50; ++i)
-				array1->v[i] = array2->v[i] * array3->v[i];
+				result->v[i] = array1->v[i] * array2->v[i];
 			break;
-		case 4:
-			op = '/';
+		case '/':
 			for(i = 0; i < 50; ++i)
-				array1->v[i] = array2->v[i] / array3->v[i];
+				result->v[i] = array1->v[i] / array2->v[i];
 			break;
 		}
 		return show(r);
