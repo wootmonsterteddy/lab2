@@ -383,8 +383,8 @@ int show(char name)
 }
 #endif
 
-//<<<<<<< HEAD
-#if 0
+
+#if 1
 int array (char name, double start, double stop)
 {
 	if(failCheck(name) == 0)
@@ -397,7 +397,6 @@ int array (char name, double start, double stop)
 		for(int i = 1; i < 49; ++i)
 		{
 			array->v[i] = start + (temp * (double) i);
-			=======
 		}
 	}
 }
@@ -414,7 +413,6 @@ double array (char var, double start, double stop)
 		for(i = 0; i < 49; ++i)
 		{
 			array->v[i] = start + (temp * i);
-			//>>>>>>> 00a6ba77ad851c6825b00c1ffda6b5ed8b9f030c
 		}
 		return 0;
 	}
