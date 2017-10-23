@@ -383,8 +383,7 @@ int show(char name)
 }
 #endif
 
-//<<<<<<< HEAD
-#if 0
+#if 1
 int array (char name, double start, double stop)
 {
 	if(failCheck(name) == 0)
@@ -397,8 +396,13 @@ int array (char name, double start, double stop)
 		for(int i = 1; i < 49; ++i)
 		{
 			array->v[i] = start + (temp * (double) i);
-			=======
 		}
+		return 0;
+	}
+	else
+	{
+		printf("Error: wrong usage of function.\n");
+		return 1;
 	}
 }
 #endif
