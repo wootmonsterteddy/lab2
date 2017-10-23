@@ -251,6 +251,10 @@ int processLine(const char *line)
 		{
 			callCommand(commandList[i].name, part2, part3, part4);
 		}
+		else
+		{
+			//calc function
+		}
 	}
 
 	//printf("%s %s %s %s\n",part1,part2,part3,part4);
@@ -395,28 +399,6 @@ int array (char name, double start, double stop)
 		for(int i = 1; i < 49; ++i)
 		{
 			array->v[i] = start + (temp * (double) i);
-		}
-		return 0;
-	}
-	else
-	{
-		printf("Error: wrong usage of function.\n");
-		return 1;
-	}
-}
-#endif
-#if 0
-double array (char var, double start, double stop)
-{
-	int i = 0, temp;
-
-	if(failCheck(var) == 0)
-	{
-		temp = (stop - start) / 50;
-		matlab_arr_t *array = find_arr(var);
-		for(i = 0; i < 49; ++i)
-		{
-			array->v[i] = start + (temp * i);
 		}
 		return 0;
 	}
