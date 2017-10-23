@@ -491,6 +491,12 @@ double sin (char x, char y)
 }
 #endif
 
+<<<<<<< HEAD
+void importCSV(const char *var,const char *filename)
+{
+
+}
+=======
 
 
 
@@ -499,3 +505,4 @@ double sin (char x, char y)
 
 
 
+>>>>>>> 64bb363cc12e4c955523f8441db09743cc8f5bc0
