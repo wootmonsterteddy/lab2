@@ -128,7 +128,7 @@ matlab_arr_t *find_arr(char var)
 	return result;
 }
 
-void callCommand(char *input1, char *input2, char *input3, char *input4)
+void callCommand(char *input1, char *input2, char *input3, char *input4, char *input5)
 {
 	if(input1 == "help")
 	{
@@ -264,7 +264,7 @@ int processLine(const char *line)
 		}
 	}
 
-	//printf("%s %s %s %s\n",part1,part2,part3,part4);
+	printf("%s %s %s %s %s\n", part1, part2, part3, part4, part5);
 
 	return 0;
 }
