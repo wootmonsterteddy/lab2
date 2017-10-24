@@ -22,6 +22,7 @@ struct commands commandList[20] =
 		{"exportCSV","<var> <filename>","Exports a variable <var> into the CSV file <filename>", 																			11},
 		{"showCSV","<filename>","displays the contents of the .csv file <filename>",			 																			12},
 		{"showvars","","displays the contents of all scalar variables",							 																			13},
+		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>",							 															14},
 };
 
 struct commands helpList[20] =
@@ -39,6 +40,7 @@ struct commands helpList[20] =
 		{"exportCSV","<var> <filename>","Exports a variable <var> into the CSV file <filename>", 																			11},
 		{"showCSV","<filename>","displays the contents of the .csv file <filename>",			 																			12},
 		{"showvars","","displays the contents of all scalar variables",							 																			13},
+		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>",							 															14},
 };
 
 void init(void)
@@ -207,6 +209,10 @@ void callCommand(char *input1, char *input2, char *input3, char *input4, char *i
 	else if(input1 == "showvars")
 	{
 		show_vars();
+	}
+	else if(input1 == "sin")
+	{
+		calcSin(*input2,*input3);
 	}
 	else
 	{
@@ -595,4 +601,36 @@ void show_vars(void)
 	{
 		printf("%c = %G\n",vars[i].n,vars[i].v);
 	}
+}
+
+int calcSin(char res, char var)
+{
+	if(failCheck(res) == -1 && failCheck(var) == -1)
+	{
+		//Calculate for scalars
+		matlab_var_t *result = find_var(res);
+		matlab_var_t *variable = find_var(var);
+
+		result->v = sin((float)(M_PI/180)*(variable->v));
+
+		printf("%c = %G\n",result->n,result->v);
+	}
+	else if(failCheck(res) == 0 && failCheck(var) == 0)
+	{
+		//Calculate for arrays
+		matlab_arr_t *result = find_arr(res);
+		matlab_arr_t *variable = find_arr(var);
+
+		for(int i = 0; i < 50; ++i)
+		{
+			result->v[i] = sin((float)(M_PI/180)*(variable->v[i]));
+		}
+	}
+	else
+	{
+		printf("Error: wrong usage of function.\n");
+		return 1;
+	}
+
+	return 0;
 }
