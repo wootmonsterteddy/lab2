@@ -22,7 +22,7 @@ struct commands commandList[20] =
 		{"exportCSV","<var> <filename>","Exports a variable <var> into the CSV file <filename>", 																			11},
 		{"showCSV","<filename>","displays the contents of the .csv file <filename>",			 																			12},
 		{"showvars","","displays the contents of all scalar variables",							 																			13},
-		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>",							 															14},
+		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>, works in degrees",		 															14},
 };
 
 struct commands helpList[20] =
@@ -40,7 +40,7 @@ struct commands helpList[20] =
 		{"exportCSV","<var> <filename>","Exports a variable <var> into the CSV file <filename>", 																			11},
 		{"showCSV","<filename>","displays the contents of the .csv file <filename>",			 																			12},
 		{"showvars","","displays the contents of all scalar variables",							 																			13},
-		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>",							 															14},
+		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>, works in degrees",		 															14},
 };
 
 void init(void)
@@ -312,22 +312,6 @@ void printhelp(void)
 	{
 		printf("	%s %s: %s\n", helpList[i].name, helpList[i].args, helpList[i].description);
 	}
-
-	/*
-	printf("\nAvailable commands:\n"
-			"	help: shows this message\n"
-			"	set <var> <value>: Set variable <var> to value <value>, e.g. 'set a 3.14'\n"
-			"	sin <res> <var>: Calculates the sin values of <var> and stores in <res>\n"
-			"	show <var>: Shows a scalar or array variable\n"
-			"	showFile <filename>: Shows the file <filename>\n"
-			"	deleteFile <filename>: Deletes the file <filename>\n"
-			"	importCSV <var> <filename>: Imports variables from the CSV file <filename> and stores in array <var>\n"
-			"	exportCSV <filename>: Saves a variables into the CSV file <filename>\n"
-			"	exportMAT <filename>: Saves a variables into the JSON file <filename>\n"
-			"	quit: exit this application\n"
-			"	exit: exit this application\n"
-			"	exit x: exit this application with return code x\n");
-	 */
 }
 
 
@@ -594,6 +578,39 @@ int showCSV(const char *filename)
 
 int exportMAT(char var, const char *filename)
 {
+	typedef struct
+	{
+		uint32_t type;
+		uint32_t mrows;
+		uint32_t ncols;
+		uint32_t imagf;
+		uint32_t namelen;
+	} Fmatrix;
+
+	Fmatrix header;
+
+	header.type = 0000;
+	header.mrows = 50;
+	header.ncols = 1;
+	header.imagf = 0;
+	header.namelen = 1 + 1;
+
+	char name = var;
+
+	FILE *outputFile = fopen(*filename,"w");
+
+	if(outputFile == NULL)
+	{
+		printf("Error: file could not be opened.\n");
+		return 1;
+	}
+
+	char buffer[256] = {0};
+
+
+
+
+	fclose(outputFile);
 
 	return 0;
 }
