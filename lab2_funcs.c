@@ -288,7 +288,7 @@ int processLine(const char *line)
 		}
 		else if(failCheck(part1) == -1 || failCheck(part1) == 0 || part1[1] == '=')
 		{
-			callCommand(commandList[i].name, part2, part3, part4, part5);
+			calc(part1, part2, part3, part4, part5);
 			break;
 		}
 	}
@@ -438,11 +438,16 @@ int array (char name, double start, double stop)
 	}
 }
 
-int calc(char r, char x, char y, char op)
+int calc(char r, char e, char x, char y, char op)
 {
 	int i = 0;
 
-	if( op != '+' || op != '-' || op != '*' || op != '/')
+	if (e != '=')
+	{
+		printf("Error, incorrect input\n");
+		return 1;
+	}
+	else if( op != '+' || op != '-' || op != '*' || op != '/')
 	{
 		printf("Error, operator does not exist \n");
 		return 1;
