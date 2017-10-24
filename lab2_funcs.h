@@ -23,6 +23,7 @@ int failCheck(char var);
 void importCSV(const char *var,const char *filename);
 void exportCSV(const char *var,const char *filename);
 int showCSV(const char *filename);
+int exportMAT(char var, const char *filename);
 void show_vars(void);
 int calcSin(char res, char var);
 

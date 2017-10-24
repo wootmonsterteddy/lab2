@@ -502,15 +502,7 @@ int calc(char r, char x, char y, char op)
 		return show(r);
 	}
 }
-#if 0
-double sin (char x, char y)
-{
 
-
-
-	return 0;
-}
-#endif
 
 void importCSV(const char *var,const char *filename)
 {
@@ -592,6 +584,12 @@ int showCSV(const char *filename)
 	}
 
 	fclose(inputFile);
+	return 0;
+}
+
+int exportMAT(char var, const char *filename)
+{
+
 	return 0;
 }
 
