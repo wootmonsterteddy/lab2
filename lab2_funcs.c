@@ -573,6 +573,39 @@ int showCSV(const char *filename)
 
 int exportMAT(char var, const char *filename)
 {
+	typedef struct
+	{
+		uint32_t type;
+		uint32_t mrows;
+		uint32_t ncols;
+		uint32_t imagf;
+		uint32_t namelen;
+	} Fmatrix;
+
+	Fmatrix header;
+
+	header.type = 0000;
+	header.mrows = 50;
+	header.ncols = 1;
+	header.imagf = 0;
+	header.namelen = 1 + 1;
+
+	char name = var;
+
+	FILE *outputFile = fopen(*filename,"w");
+
+	if(outputFile == NULL)
+	{
+		printf("Error: file could not be opened.\n");
+		return 1;
+	}
+
+	char buffer[256] = {0};
+
+
+
+
+	fclose(outputFile);
 
 	return 0;
 }
@@ -613,30 +646,6 @@ int calcSin(char res, char var)
 		printf("Error: wrong usage of function.\n");
 		return 1;
 	}
-
-	return 0;
-}
-
-int exportMAT(char var, const char *filename)
-{
-	typedef struct
-	{
-		uint32_t type;
-		uint32_t mrows;
-		uint32_t ncols;
-		uint32_t imagf;
-		uint32_t namelen;
-	} Fmatrix;
-
-	Fmatrix header;
-
-	header.type = 0000;
-	header.mrows = 50;
-	header.ncols = 1;
-	header.imagf = 0;
-	header.namelen = 1 + 1;
-
-	char name = var;
 
 	return 0;
 }
