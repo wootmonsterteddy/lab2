@@ -22,5 +22,7 @@ void set (char var, double v);
 int failCheck(char var);
 void importCSV(const char *var,const char *filename);
 void exportCSV(const char *var,const char *filename);
+int showCSV(const char *filename);
+void show_vars(void);
 
 #endif /* __LAB2_FUNCS_H__ */

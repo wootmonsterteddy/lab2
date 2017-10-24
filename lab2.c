@@ -24,12 +24,17 @@ clear -
 set -
 show -
 array -
-importCSV -
-exportCSV -
 ______________________
 
 Lab2 Ex2:
 calc *
+show_vars() -
+______________________
+
+Lab2 Ex3:
+showCSV -
+importCSV -
+exportCSV -
 
 */
 

@@ -13,13 +13,15 @@ struct commands commandList[20] =
 		{"exit x","","exit this application with return code x",																											2},
 		{"quit","","exit this application",																																	3},
 		{"help","","shows this message",																																	4},
-		{"show","<var>","shows a scalar or array variable",																													5},
+		{"show","<var>","shows a scalar or array variable. If \"vars\" is given as <var>, all scalar variables and displayed",												5},
 		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",																					6},
 		{"clear","<var>","clear the given variable or array by setting all values to 0",																					7},
 		{"array","<var> <start> <stop>","fill array <var> with first value <start> and last value <stop> with values between at equal steps",								8},
 		{"calc","<var> <value1> <value2> <operator>","set the first array or scalar, <var>, to <value1> <operator> <value2>. Element by element if it is an array", 		9},
 		{"importCSV","<var> <filename>","Imports variables from the CSV file <filename> and stores in array <var>", 														10},
 		{"exportCSV","<var> <filename>","Exports a variable <var> into the CSV file <filename>", 																			11},
+		{"showCSV","<filename>","displays the contents of the .csv file <filename>",			 																			12},
+		{"showvars","","displays the contents of all scalar variables",							 																			13},
 };
 
 struct commands helpList[20] =
@@ -28,13 +30,15 @@ struct commands helpList[20] =
 		{"exit x","","exit this application with return code x",																											2},
 		{"quit","","exit this application",																																	3},
 		{"help","","shows this message",																																	4},
-		{"show","<var>","shows a scalar or array variable",																													5},
+		{"show","<var>","shows a scalar or array variable. If \"vars\" is given as <var>, all scalar variables and displayed",												5},
 		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",																					6},
 		{"clear","<var>","clear the given variable or array by setting all values to 0",																					7},
 		{"array","<var> <start> <stop>","fill array <var> with first value <start> and last value <stop> with values between at equal steps",								8},
 		{"calc","<var> <value1> <value2> <operator>","set the first array or scalar, <var>, to <value1> <operator> <value2>. Element by element if it is an array.", 		9},
 		{"importCSV","<var> <filename>","Imports variables from the CSV file <filename> and stores in array <var>", 														10},
 		{"exportCSV","<var> <filename>","Exports a variable <var> into the CSV file <filename>", 																			11},
+		{"showCSV","<filename>","displays the contents of the .csv file <filename>",			 																			12},
+		{"showvars","","displays the contents of all scalar variables",							 																			13},
 };
 
 void init(void)
@@ -195,6 +199,14 @@ void callCommand(char *input1, char *input2, char *input3, char *input4, char *i
 	else if(input1 == "exportCSV")
 	{
 		exportCSV(input2,input3);
+	}
+	else if(input1 == "showCSV")
+	{
+		showCSV(input2);
+	}
+	else if(input1 == "showvars")
+	{
+		show_vars();
 	}
 	else
 	{
@@ -553,4 +565,34 @@ void exportCSV(const char *var,const char *filename)
 	}
 
 	fclose(outputFile);
+}
+
+int showCSV(const char *filename)
+{
+	FILE *inputFile = fopen(filename,"r");
+
+	if(inputFile == NULL)
+	{
+		printf("Error: file could not be opened.\n");
+		return 1;
+	}
+
+	char buffer[256] = {0};
+
+	for(int i = 0; i < 50; ++i)
+	{
+		fgets(buffer,sizeof(buffer)-1,inputFile);
+		printf("%s",buffer);
+	}
+
+	fclose(inputFile);
+	return 0;
+}
+
+void show_vars(void)
+{
+	for(int i = 0; i < 6; ++i)
+	{
+		printf("%c = %G\n",vars[i].n,vars[i].v);
+	}
 }
