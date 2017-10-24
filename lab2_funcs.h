@@ -12,7 +12,6 @@
 
 // add all other functions below
 int clear(char var);
-int calc(char r, char x, char y, char op);
 int processLine(const char *line);
 void printhelp(void);
 void readLine(void);
