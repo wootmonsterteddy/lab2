@@ -18,11 +18,12 @@ struct commands commandList[20] =
 		{"clear","<var>","clear the given variable or array by setting all values to 0",																					7},
 		{"array","<var> <start> <stop>","fill array <var> with first value <start> and last value <stop> with values between at equal steps",								8},
 		{"calc","<var> <value1> <value2> <operator>","set the first array or scalar, <var>, to <value1> <operator> <value2>. Element by element if it is an array", 		9},
-		{"importCSV","<var> <filename>","Imports variables from the CSV file <filename> and stores in array <var>", 														10},
-		{"exportCSV","<var> <filename>","Exports a variable <var> into the CSV file <filename>", 																			11},
+		{"importCSV","<var> <filename>","imports variables from the CSV file <filename> and stores in array <var>", 														10},
+		{"exportCSV","<var> <filename>","exports a variable <var> into the CSV file <filename>", 																			11},
 		{"showCSV","<filename>","displays the contents of the .csv file <filename>",			 																			12},
 		{"showvars","","displays the contents of all scalar variables",							 																			13},
 		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>, works in degrees",		 															14},
+		{"exportMAT","<var> <filename>","exports a variable <var> to the MAT file <filename>",		 																		15},
 };
 
 struct commands helpList[20] =
@@ -41,6 +42,7 @@ struct commands helpList[20] =
 		{"showCSV","<filename>","displays the contents of the .csv file <filename>",			 																			12},
 		{"showvars","","displays the contents of all scalar variables",							 																			13},
 		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>, works in degrees",		 															14},
+		{"exportMAT","<var> <filename>","exports a variable <var> to the MAT file <filename>",		 																		15},
 };
 
 void init(void)
@@ -213,6 +215,10 @@ void callCommand(char *input1, char *input2, char *input3, char *input4, char *i
 	else if(input1 == "sin")
 	{
 		calcSin(*input2,*input3);
+	}
+	else if(input1 == "exportMAT")
+	{
+		exportMAT(input2,input3);
 	}
 	else
 	{
@@ -576,28 +582,17 @@ int showCSV(const char *filename)
 	return 0;
 }
 
-int exportMAT(char var, const char *filename)
+int exportMAT(char *var, const char *filename)
 {
-	typedef struct
-	{
-		uint32_t type;
-		uint32_t mrows;
-		uint32_t ncols;
-		uint32_t imagf;
-		uint32_t namelen;
-	} Fmatrix;
-
 	Fmatrix header;
 
 	header.type = 0000;
-	header.mrows = 50;
+	header.mrows = ARRAY_LEN;
 	header.ncols = 1;
 	header.imagf = 0;
 	header.namelen = 1 + 1;
 
-	char name = var;
-
-	FILE *outputFile = fopen(*filename,"w");
+	FILE *outputFile = fopen(filename,"w");
 
 	if(outputFile == NULL)
 	{
@@ -605,10 +600,16 @@ int exportMAT(char var, const char *filename)
 		return 1;
 	}
 
-	char buffer[256] = {0};
+	//char buffer[256] = {0};
 
+	matlab_arr_t *array = find_arr(*var);
 
+	fwrite(&header,sizeof(uint32_t),5,outputFile);
 
+	for(int i = 0; i < ARRAY_LEN; ++i)
+	{
+		fwrite(&(array->v[i]),sizeof(double),1,outputFile);
+	}
 
 	fclose(outputFile);
 

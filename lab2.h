@@ -26,6 +26,15 @@ struct commands
 	int number;
 };
 
+typedef struct
+{
+	uint32_t type;
+	uint32_t mrows;
+	uint32_t ncols;
+	uint32_t imagf;
+	uint32_t namelen;
+} Fmatrix;
+
 /* function declarations */
 int processLine(const char *line);
 
