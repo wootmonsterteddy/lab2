@@ -736,8 +736,8 @@ int event(char R, char I)
 			while(input->v[i] > 0.5 && i <= 49)
 			{
 				result->v[i] = input->v[i];
-				i++;
 				stop = i;
+				i++;
 			}
 			break;
 		}
