@@ -230,7 +230,7 @@ void callCommand(char *input1, char *input2, char *input3, char *input4, char *i
 	}
 	else if(input1 == "event")
 	{
-		debounce(*input2,*input3);
+		event(*input2,*input3);
 	}
 	else
 	{
@@ -736,8 +736,8 @@ int event(char R, char I)
 			while(input->v[i] > 0.5 && i <= 49)
 			{
 				result->v[i] = input->v[i];
-				stop = i;
 				i++;
+				stop = i;
 			}
 			break;
 		}

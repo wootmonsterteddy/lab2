@@ -42,7 +42,7 @@ Lab2 Ex4:
 sin -
 exportMAT *
 debounce -
-event *
+event -
 
 */
 
