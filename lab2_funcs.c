@@ -294,7 +294,7 @@ int processLine(const char *line)
 		}
 		else if(failCheck(part1) == -1 || failCheck(part1) == 0 || part1[1] == '=')
 		{
-			calc(part1, part2, part3, part4, part5);
+			calc(part1,part2,part3,part4,part5);
 			break;
 		}
 	}
@@ -600,13 +600,16 @@ int exportMAT(char *var, const char *filename)
 		return 1;
 	}
 
-	//char buffer[256] = {0};
+	char *name[2] = {0};
+	name[0] = var;
+	name[1] = '\0';
 
 	matlab_arr_t *array = find_arr(*var);
 
-	fwrite(&header,sizeof(uint32_t),5,outputFile);
+	fwrite(&header,sizeof(uint32_t),5,outputFile); //Write header
+	fwrite(name,1,2,outputFile); //Write name
 
-	for(int i = 0; i < ARRAY_LEN; ++i)
+	for(int i = 0; i < ARRAY_LEN; ++i) //Write array
 	{
 		fwrite(&(array->v[i]),sizeof(double),1,outputFile);
 	}
