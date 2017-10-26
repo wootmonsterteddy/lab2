@@ -24,6 +24,7 @@ struct commands commandList[20] =
 		{"showvars","","displays the contents of all scalar variables",							 																			13},
 		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>, works in degrees",		 															14},
 		{"exportMAT","<var> <filename>","exports a variable <var> to the MAT file <filename>",		 																		15},
+		{"debounce","<res> <var>","debounces an array <var> and outputs the result to an array <res>",		 																16},
 };
 
 struct commands helpList[20] =
@@ -43,6 +44,7 @@ struct commands helpList[20] =
 		{"showvars","","displays the contents of all scalar variables",							 																			13},
 		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>, works in degrees",		 															14},
 		{"exportMAT","<var> <filename>","exports a variable <var> to the MAT file <filename>",		 																		15},
+		{"debounce","<res> <var>","debounces an array <var> and outputs the result to an array <res>",		 																16},
 };
 
 void init(void)
@@ -219,6 +221,10 @@ void callCommand(char *input1, char *input2, char *input3, char *input4, char *i
 	else if(input1 == "exportMAT")
 	{
 		exportMAT(input2,input3);
+	}
+	else if(input1 == "debounce")
+	{
+		debounce(*input2,*input3);
 	}
 	else
 	{
@@ -658,3 +664,38 @@ int calcSin(char res, char var)
 
 	return 0;
 }
+
+int debounce(char R, char I) // R is result, I is input
+{
+	matlab_arr_t *result = find_arr(R);
+	matlab_arr_t *input = find_arr(I);
+
+	for(int i = 0; i < ARRAY_LEN; i++)	//Clean input to <0.3V & >3.3V
+	{
+		if(input->v[i] > 3)
+		{
+			result->v[i] = 3.3;
+		}
+		else if(input->v[i] < 0.3)
+		{
+			result->v[i] = 0;
+		}
+	}
+
+	for(int i = 1; i < ARRAY_LEN-2; i++) //Pure digital signal
+	{
+		if(result->v[i] != result->v[i+1] || result->v[i] != result->v[i+2])
+		{
+			result->v[i] = result->v[i-1];
+		}
+	}
+
+	if(result->v[48] != result->v[49])
+	{
+		result->v[48] = result->v[47];
+	}
+	result->v[49] = result->v[48];
+
+	return 0;
+}
+

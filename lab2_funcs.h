@@ -25,5 +25,6 @@ int showCSV(const char *filename);
 int exportMAT(char *var, const char *filename);
 void show_vars(void);
 int calcSin(char res, char var);
+int debounce(char R, char I);
 
 #endif /* __LAB2_FUNCS_H__ */
