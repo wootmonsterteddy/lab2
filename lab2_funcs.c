@@ -25,6 +25,7 @@ struct commands commandList[20] =
 		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>, works in degrees",		 															14},
 		{"exportMAT","<var> <filename>","exports a variable <var> to the MAT file <filename>",		 																		15},
 		{"debounce","<res> <var>","debounces an array <var> and outputs the result to an array <res>",		 																16},
+		{"event","<res> <var>","finds and event in array <var> and outputs the result to an array <res> and prints start and stop values to the screen",					17},
 };
 
 struct commands helpList[20] =
@@ -45,6 +46,7 @@ struct commands helpList[20] =
 		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>, works in degrees",		 															14},
 		{"exportMAT","<var> <filename>","exports a variable <var> to the MAT file <filename>",		 																		15},
 		{"debounce","<res> <var>","debounces an array <var> and outputs the result to an array <res>",		 																16},
+		{"event","<res> <var>","finds and event in array <var> and outputs the result to an array <res> and prints start and stop values to the screen",					17},
 };
 
 void init(void)
@@ -223,6 +225,10 @@ void callCommand(char *input1, char *input2, char *input3, char *input4, char *i
 		exportMAT(input2,input3);
 	}
 	else if(input1 == "debounce")
+	{
+		debounce(*input2,*input3);
+	}
+	else if(input1 == "event")
 	{
 		debounce(*input2,*input3);
 	}
@@ -695,6 +701,49 @@ int debounce(char R, char I) // R is result, I is input
 		result->v[48] = result->v[47];
 	}
 	result->v[49] = result->v[48];
+
+	return 0;
+}
+
+int event(char R, char I)
+{
+	matlab_arr_t *result = find_arr(R);
+	matlab_arr_t *input = find_arr(I);
+	int counter = 0, start = -1, stop = -1, i;
+	bool eventFound = false;
+
+	for(int i = 0; i < ARRAY_LEN; i++) //Clear result array
+	{
+		result->v[i] = 0;
+	}
+
+	for(i = 0; i < ARRAY_LEN-10; i++)
+	{
+		int k = 0;
+		while(input->v[i+k] && input->v[i+k] > 0.5) //Look for 10 samples.
+		{
+			if(counter == 10)
+			{
+				eventFound = true;
+				start = i;
+				break;
+			}
+			counter++;
+			k++;
+		}
+		if(eventFound == true)
+		{
+			while(input->v[i] > 0.5 && i <= 49)
+			{
+				result->v[i] = input->v[i];
+				stop = i;
+				i++;
+			}
+			break;
+		}
+	}
+
+	printf("Event start detected @%i\nEvent stop detected @%i\n",start,stop);
 
 	return 0;
 }

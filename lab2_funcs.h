@@ -7,6 +7,7 @@
 #include <strings.h>
 #include <string.h>
 #include <math.h>
+#include <stdbool.h>
 #include "lab2.h"
 
 
@@ -26,5 +27,6 @@ int exportMAT(char *var, const char *filename);
 void show_vars(void);
 int calcSin(char res, char var);
 int debounce(char R, char I);
+int event(char R, char I);
 
 #endif /* __LAB2_FUNCS_H__ */
