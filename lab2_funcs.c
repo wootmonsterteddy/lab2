@@ -24,6 +24,8 @@ struct commands commandList[20] =
 		{"showvars","","displays the contents of all scalar variables",							 																			13},
 		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>, works in degrees",		 															14},
 		{"exportMAT","<var> <filename>","exports a variable <var> to the MAT file <filename>",		 																		15},
+		{"debounce","<res> <var>","debounces an array <var> and outputs the result to an array <res>",		 																16},
+		{"event","<res> <var>","finds and event in array <var> and outputs the result to an array <res> and prints start and stop values to the screen",					17},
 };
 
 struct commands helpList[20] =
@@ -43,6 +45,8 @@ struct commands helpList[20] =
 		{"showvars","","displays the contents of all scalar variables",							 																			13},
 		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>, works in degrees",		 															14},
 		{"exportMAT","<var> <filename>","exports a variable <var> to the MAT file <filename>",		 																		15},
+		{"debounce","<res> <var>","debounces an array <var> and outputs the result to an array <res>",		 																16},
+		{"event","<res> <var>","finds and event in array <var> and outputs the result to an array <res> and prints start and stop values to the screen",					17},
 };
 
 void init(void)
@@ -220,6 +224,14 @@ void callCommand(char *input1, char *input2, char *input3, char *input4, char *i
 	{
 		exportMAT(input2,input3);
 	}
+	else if(input1 == "debounce")
+	{
+		debounce(*input2,*input3);
+	}
+	else if(input1 == "event")
+	{
+		event(*input2,*input3);
+	}
 	else
 	{
 		printf("Error: command not found.\n");
@@ -294,7 +306,7 @@ int processLine(const char *line)
 		}
 		else if(failCheck(part1) == -1 || failCheck(part1) == 0 || part1[1] == '=')
 		{
-			calc(part1, part2, part3, part4, part5);
+			calc(part1,part2,part3,part4,part5);
 			break;
 		}
 	}
@@ -600,13 +612,16 @@ int exportMAT(char *var, const char *filename)
 		return 1;
 	}
 
-	//char buffer[256] = {0};
+	char *name[2] = {0};
+	name[0] = var;
+	name[1] = '\0';
 
 	matlab_arr_t *array = find_arr(*var);
 
-	fwrite(&header,sizeof(uint32_t),5,outputFile);
+	fwrite(&header,sizeof(uint32_t),5,outputFile); //Write header
+	fwrite(name,1,2,outputFile); //Write name
 
-	for(int i = 0; i < ARRAY_LEN; ++i)
+	for(int i = 0; i < ARRAY_LEN; ++i) //Write array
 	{
 		fwrite(&(array->v[i]),sizeof(double),1,outputFile);
 	}
@@ -655,3 +670,81 @@ int calcSin(char res, char var)
 
 	return 0;
 }
+
+int debounce(char R, char I) // R is result, I is input
+{
+	matlab_arr_t *result = find_arr(R);
+	matlab_arr_t *input = find_arr(I);
+
+	for(int i = 0; i < ARRAY_LEN; i++)	//Clean input to <0.3V & >3.3V
+	{
+		if(input->v[i] > 3)
+		{
+			result->v[i] = 3.3;
+		}
+		else if(input->v[i] < 0.3)
+		{
+			result->v[i] = 0;
+		}
+	}
+
+	for(int i = 1; i < ARRAY_LEN-2; i++) //Pure digital signal
+	{
+		if(result->v[i] != result->v[i+1] || result->v[i] != result->v[i+2])
+		{
+			result->v[i] = result->v[i-1];
+		}
+	}
+
+	if(result->v[48] != result->v[49])
+	{
+		result->v[48] = result->v[47];
+	}
+	result->v[49] = result->v[48];
+
+	return 0;
+}
+
+int event(char R, char I)
+{
+	matlab_arr_t *result = find_arr(R);
+	matlab_arr_t *input = find_arr(I);
+	int counter = 0, start = -1, stop = -1, i;
+	bool eventFound = false;
+
+	for(int i = 0; i < ARRAY_LEN; i++) //Clear result array
+	{
+		result->v[i] = 0;
+	}
+
+	for(i = 0; i < ARRAY_LEN-10; i++)
+	{
+		int k = 0;
+		while(input->v[i+k] && input->v[i+k] > 0.5) //Look for 10 samples.
+		{
+			if(counter == 10)
+			{
+				eventFound = true;
+				start = i;
+				break;
+			}
+			counter++;
+			k++;
+		}
+		if(eventFound == true)
+		{
+			while(input->v[i] > 0.5 && i <= 49)
+			{
+				result->v[i] = input->v[i];
+				stop = i;
+				i++;
+			}
+			break;
+		}
+	}
+
+	printf("Event start detected @%i\nEvent stop detected @%i\n",start,stop);
+
+	return 0;
+}
+
