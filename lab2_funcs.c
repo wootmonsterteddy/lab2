@@ -7,7 +7,7 @@
 
 #include "lab2_funcs.h"
 
-struct commands commandList[20] =
+struct commands commandList[16] =
 { //name,args,description,number
 		{"exit","","exit this application", 																																1},
 		{"exit x","","exit this application with return code x",																											2},
@@ -27,7 +27,7 @@ struct commands commandList[20] =
 		{"event","<res> <var>","finds and event in array <var> and outputs the result to an array <res> and prints start and stop values to the screen",					16},
 };
 
-struct commands helpList[20] =
+struct commands helpList[17] =
 { //name,args,description,number
 		{"exit","","exit this application", 																																1},
 		{"exit x","","exit this application with return code x",																											2},
@@ -37,7 +37,7 @@ struct commands helpList[20] =
 		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",																					6},
 		{"clear","<var>","clear the given variable or array by setting all values to 0",																					7},
 		{"array","<var> <start> <stop>","fill array <var> with first value <start> and last value <stop> with values between at equal steps",								8},
-		{"calc","<var> <value1> <value2> <operator>","set the first array or scalar, <var>, to <value1> <operator> <value2>. Element by element if it is an array.", 		9},
+		{"calc","<var> <var1> <operator> <var2>","set the first array or scalar, <var>, to <var1> <operator> <var2>. Element by element if it is an array.", 				9},
 		{"importCSV","<var> <filename>","Imports variables from the CSV file <filename> and stores in array <var>", 														10},
 		{"exportCSV","<var> <filename>","Exports a variable <var> into the CSV file <filename>", 																			11},
 		{"showCSV","<filename>","displays the contents of the .csv file <filename>",			 																			12},
@@ -78,7 +78,7 @@ void init(void)
 	clear('X');
 	clear('Y');
 
-	printf("MINIMatlab started. Type 'help' for a list of commands.\n");
+	printf("MINIBaltam started. Type 'help' for a list of commands.\n");
 }
 
 matlab_var_t *find_var(char var)
@@ -308,9 +308,6 @@ int processLine(const char *line)
 	{
 		calc(part1,part3,part4,part5);
 	}
-
-	//printf("%s %s %s %s %s\n", part1, part2, part3, part4, part5);
-
 	return 0;
 }
 
@@ -351,7 +348,7 @@ int clear(char var)
 {
 	if(failCheck(var) == 1)
 	{
-		printf("Error: incorrect usage of function. \n");
+		printf("Error: unknown variable '%c'. \n", var);
 		return 0;
 	}
 	else if(failCheck(var) == -1)
@@ -389,7 +386,7 @@ void set(char var, double v)
 	}
 	else
 	{
-		printf("Error: unkown var '%c'\n",var);
+		printf("Error: unknown variable '%c'\n",var);
 	}
 }
 
@@ -441,8 +438,6 @@ int array (char name, double start, double stop)
 int calc(char *r, char *x, char *op, char *y)
 {
 	int i = 0;
-
-	//printf("r = %c, x = %c, op = %c, y = %c\n",*r,*x,*op,*y);
 
 	if((failCheck(*r) == 1 || failCheck(*x) == 1 || failCheck(*y) == 1) ||
 		(failCheck(*r) != failCheck(*x) || failCheck(*r) != failCheck(*y)))
