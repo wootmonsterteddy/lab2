@@ -613,18 +613,14 @@ int exportMAT(char *var, const char *filename)
 	}
 
 	char *name[2] = {0};
-	name[0] = var;
+	name[0] = *var;
 	name[1] = '\0';
 
 	matlab_arr_t *array = find_arr(*var);
 
-	fwrite(&header,sizeof(uint32_t),5,outputFile); //Write header
-	fwrite(name,1,2,outputFile); //Write name
-
-	for(int i = 0; i < ARRAY_LEN; ++i) //Write array
-	{
-		fwrite(&(array->v[i]),sizeof(double),1,outputFile);
-	}
+	fwrite(&header,sizeof(Fmatrix),1,outputFile); //Write header
+	fwrite(&name,1,2,outputFile); //Write name
+	fwrite(array->v,sizeof(double),ARRAY_LEN,outputFile);
 
 	fclose(outputFile);
 
