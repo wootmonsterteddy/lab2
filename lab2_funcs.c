@@ -26,27 +26,7 @@ struct commands commandList[17] =
 		{"debounce","<res> <var>","debounces an array <var> and outputs the result to an array <res>",		 																15},
 		{"event","<res> <var>","finds and event in array <var> and outputs the result to an array <res> and prints start and stop values to the screen",					16},
 };
-/*
-struct commands helpList[16] =
-{ //name,args,description,number
-		{"exit","","exit this application", 																																1},
-		{"exit x","","exit this application with return code x",																											2},
-		{"quit","","exit this application",																																	3},
-		{"help","","shows this message",																																	4},
-		{"show","<var>","shows a scalar or array variable",																													5},
-		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",																					6},
-		{"clear","<var>","clear the given variable or array by setting all values to 0",																					7},
-		{"array","<var> <start> <stop>","fill array <var> with first value <start> and last value <stop> with values between at equal steps",								8},
-		{"importCSV","<var> <filename>","imports values from the CSV file <filename> and stores in array <var>", 															9},
-		{"exportCSV","<var> <filename>","exports an array <var> into the CSV file <filename>", 																				10},
-		{"showCSV","<filename>","displays the contents of the .csv file <filename>",			 																			11},
-		{"showvars","","displays the contents of all scalar variables",							 																			12},
-		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>, works in degrees",		 															13},
-		{"exportMAT","<var> <filename>","exports a variable <var> to the MAT file <filename>",		 																		14},
-		{"debounce","<res> <var>","debounces an array <var> and outputs the result to an array <res>",		 																15},
-		{"event","<res> <var>","finds and event in array <var> and outputs the result to an array <res> and prints start and stop values to the screen",					16},
-};
-*/
+
 void init(void)
 {
 	vars[0].n = 'a';
