@@ -7,7 +7,7 @@
 
 #include "lab2_funcs.h"
 
-struct commands commandList[16] =
+struct commands commandList[17] =
 { //name,args,description,number
 		{"exit","","exit this application", 																																1},
 		{"exit x","","exit this application with return code x",																											2},
@@ -26,8 +26,8 @@ struct commands commandList[16] =
 		{"debounce","<res> <var>","debounces an array <var> and outputs the result to an array <res>",		 																15},
 		{"event","<res> <var>","finds and event in array <var> and outputs the result to an array <res> and prints start and stop values to the screen",					16},
 };
-
-struct commands helpList[17] =
+/*
+struct commands helpList[16] =
 { //name,args,description,number
 		{"exit","","exit this application", 																																1},
 		{"exit x","","exit this application with return code x",																											2},
@@ -46,7 +46,7 @@ struct commands helpList[17] =
 		{"debounce","<res> <var>","debounces an array <var> and outputs the result to an array <res>",		 																15},
 		{"event","<res> <var>","finds and event in array <var> and outputs the result to an array <res> and prints start and stop values to the screen",					16},
 };
-
+*/
 void init(void)
 {
 	vars[0].n = 'a';
@@ -317,16 +317,16 @@ int processLine(const char *line)
 void printhelp(void)
 {
 	unsigned int length = 0, i = 0;
-	while(helpList[i].number)
+	while(commandList[i].number)
 	{
-		length = helpList[i].number;
+		length = commandList[i].number;
 		i++;
 	}
 	printf("Available commands:\n");
 
 	for(int i = 0; i < length; ++i)
 	{
-		printf("	%s %s: %s\n", helpList[i].name, helpList[i].args, helpList[i].description);
+		printf("	%s %s: %s\n", commandList[i].name, commandList[i].args, commandList[i].description);
 	}
 }
 
@@ -738,4 +738,3 @@ int event(char R, char I)
 
 	return 0;
 }
-
