@@ -579,7 +579,7 @@ int exportMAT(char *var, const char *filename)
 	header.imagf = 0;
 	header.namelen = 1 + 1;
 
-	FILE *outputFile = fopen(filename,"w");
+	FILE *outputFile = fopen(filename,"wb");
 
 	if(outputFile == NULL)
 	{
