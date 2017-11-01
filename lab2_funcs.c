@@ -300,12 +300,16 @@ int processLine(const char *line)
 		if(strcmp(commandList[i].name, part1) == 0)
 		{
 			callCommand(commandList[i].name, part2, part3, part4, part5);
-			break;
+			return 0;
 		}
 	}
 	if((failCheck(*part1) == -1 || failCheck(*part1) == 0) && *part2 == '=')
 	{
 		calc(part1,part3,part4,part5);
+	}
+	else
+	{
+		printf("Error: command not found.\n");
 	}
 	return 0;
 }
@@ -466,8 +470,9 @@ int calc(char *r, char *x, char *op, char *y)
 			break;
 		default:
 			printf("Error: operator does not exist.\n");
-			break;
+			return 0;
 		}
+		printf("%c = %g\n",*r,result->v);
 	}
 	else if(failCheck(*r) == 0 && failCheck(*x) == 0 && failCheck(*y) == 0)
 	{
@@ -494,7 +499,7 @@ int calc(char *r, char *x, char *op, char *y)
 			break;
 		default:
 			printf("Error: operator does not exist.\n");
-			break;
+			return 0;
 		}
 	}
 	return 0;
