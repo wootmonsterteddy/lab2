@@ -7,46 +7,24 @@
 
 #include "lab2_funcs.h"
 
-struct commands commandList[20] =
+struct commands commandList[17] =
 { //name,args,description,number
 		{"exit","","exit this application", 																																1},
 		{"exit x","","exit this application with return code x",																											2},
 		{"quit","","exit this application",																																	3},
 		{"help","","shows this message",																																	4},
-		{"show","<var>","shows a scalar or array variable. If \"vars\" is given as <var>, all scalar variables and displayed",												5},
+		{"show","<var>","shows a scalar or array variable",																													5},
 		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",																					6},
 		{"clear","<var>","clear the given variable or array by setting all values to 0",																					7},
 		{"array","<var> <start> <stop>","fill array <var> with first value <start> and last value <stop> with values between at equal steps",								8},
-		{"calc","<var> <value1> <value2> <operator>","set the first array or scalar, <var>, to <value1> <operator> <value2>. Element by element if it is an array", 		9},
-		{"importCSV","<var> <filename>","imports variables from the CSV file <filename> and stores in array <var>", 														10},
-		{"exportCSV","<var> <filename>","exports a variable <var> into the CSV file <filename>", 																			11},
-		{"showCSV","<filename>","displays the contents of the .csv file <filename>",			 																			12},
-		{"showvars","","displays the contents of all scalar variables",							 																			13},
-		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>, works in degrees",		 															14},
-		{"exportMAT","<var> <filename>","exports a variable <var> to the MAT file <filename>",		 																		15},
-		{"debounce","<res> <var>","debounces an array <var> and outputs the result to an array <res>",		 																16},
-		{"event","<res> <var>","finds and event in array <var> and outputs the result to an array <res> and prints start and stop values to the screen",					17},
-};
-
-struct commands helpList[20] =
-{ //name,args,description,number
-		{"exit","","exit this application", 																																1},
-		{"exit x","","exit this application with return code x",																											2},
-		{"quit","","exit this application",																																	3},
-		{"help","","shows this message",																																	4},
-		{"show","<var>","shows a scalar or array variable. If \"vars\" is given as <var>, all scalar variables and displayed",												5},
-		{"set","<var> <value>","set variable <var> to value <value>, e.g. 'set a 3.14'",																					6},
-		{"clear","<var>","clear the given variable or array by setting all values to 0",																					7},
-		{"array","<var> <start> <stop>","fill array <var> with first value <start> and last value <stop> with values between at equal steps",								8},
-		{"calc","<var> <value1> <value2> <operator>","set the first array or scalar, <var>, to <value1> <operator> <value2>. Element by element if it is an array.", 		9},
-		{"importCSV","<var> <filename>","Imports variables from the CSV file <filename> and stores in array <var>", 														10},
-		{"exportCSV","<var> <filename>","Exports a variable <var> into the CSV file <filename>", 																			11},
-		{"showCSV","<filename>","displays the contents of the .csv file <filename>",			 																			12},
-		{"showvars","","displays the contents of all scalar variables",							 																			13},
-		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>, works in degrees",		 															14},
-		{"exportMAT","<var> <filename>","exports a variable <var> to the MAT file <filename>",		 																		15},
-		{"debounce","<res> <var>","debounces an array <var> and outputs the result to an array <res>",		 																16},
-		{"event","<res> <var>","finds and event in array <var> and outputs the result to an array <res> and prints start and stop values to the screen",					17},
+		{"importCSV","<var> <filename>","imports values from the CSV file <filename> and stores in array <var>", 															9},
+		{"exportCSV","<var> <filename>","exports an array <var> into the CSV file <filename>", 																				10},
+		{"showCSV","<filename>","displays the contents of the .csv file <filename>",			 																			11},
+		{"showvars","","displays the contents of all scalar variables",							 																			12},
+		{"sin","<res> <var>","calculates the sin values of <var> and stores in <res>, works in degrees",		 															13},
+		{"exportMAT","<var> <filename>","exports a variable <var> to the MAT file <filename>",		 																		14},
+		{"debounce","<res> <var>","debounces an array <var> and outputs the result to an array <res>",		 																15},
+		{"event","<res> <var>","finds and event in array <var> and outputs the result to an array <res> and prints start and stop values to the screen",					16},
 };
 
 void init(void)
@@ -79,7 +57,7 @@ void init(void)
 	clear('X');
 	clear('Y');
 
-	printf("MINIMatlab started. Type 'help' for a list of commands.\n");
+	printf("MINIBaltam started. Type 'help' for a list of commands.\n");
 }
 
 matlab_var_t *find_var(char var)
@@ -302,33 +280,33 @@ int processLine(const char *line)
 		if(strcmp(commandList[i].name, part1) == 0)
 		{
 			callCommand(commandList[i].name, part2, part3, part4, part5);
-			break;
-		}
-		else if(failCheck(part1) == -1 || failCheck(part1) == 0 || part1[1] == '=')
-		{
-			calc(part1,part2,part3,part4,part5);
-			break;
+			return 0;
 		}
 	}
-
-	//printf("%s %s %s %s %s\n", part1, part2, part3, part4, part5);
-
+	if((failCheck(*part1) == -1 || failCheck(*part1) == 0) && *part2 == '=')
+	{
+		calc(part1,part3,part4,part5);
+	}
+	else
+	{
+		printf("Error: command not found.\n");
+	}
 	return 0;
 }
 
 void printhelp(void)
 {
 	unsigned int length = 0, i = 0;
-	while(helpList[i].number)
+	while(commandList[i].number)
 	{
-		length = helpList[i].number;
+		length = commandList[i].number;
 		i++;
 	}
 	printf("Available commands:\n");
 
 	for(int i = 0; i < length; ++i)
 	{
-		printf("	%s %s: %s\n", helpList[i].name, helpList[i].args, helpList[i].description);
+		printf("	%s %s: %s\n", commandList[i].name, commandList[i].args, commandList[i].description);
 	}
 }
 
@@ -353,7 +331,7 @@ int clear(char var)
 {
 	if(failCheck(var) == 1)
 	{
-		printf("Error: incorrect usage of function. \n");
+		printf("Error: unknown variable '%c'. \n", var);
 		return 0;
 	}
 	else if(failCheck(var) == -1)
@@ -391,7 +369,7 @@ void set(char var, double v)
 	}
 	else
 	{
-		printf("Error: incorrect input.\n");
+		printf("Error: unknown variable '%c'\n",var);
 	}
 }
 
@@ -412,7 +390,7 @@ int show(char name)
 	}
 	else
 	{
-		printf("Error: incorrect usage of function.\n");
+		printf("Error: unknown variable '%c'\n",name);
 		return 0;
 	}
 	return 0;
@@ -440,32 +418,23 @@ int array (char name, double start, double stop)
 	}
 }
 
-int calc(char r, char e, char x, char y, char op)
+int calc(char *r, char *x, char *op, char *y)
 {
 	int i = 0;
 
-	if (e != '=')
-	{
-		printf("Error, incorrect input\n");
-		return 1;
-	}
-	else if( op != '+' || op != '-' || op != '*' || op != '/')
-	{
-		printf("Error, operator does not exist \n");
-		return 1;
-	}
-	else if(failCheck(r) == 1 || failCheck(x) == 1 || failCheck(y) == 1)
+	if((failCheck(*r) == 1 || failCheck(*x) == 1 || failCheck(*y) == 1) ||
+		(failCheck(*r) != failCheck(*x) || failCheck(*r) != failCheck(*y)))
 	{
 		printf("Error: incorrect input.\n");
 		return 1;
 	}
-	else if(failCheck(r) == -1 || failCheck(x) == -1 || failCheck(y) == -1)
+	else if(failCheck(*r) == -1 && failCheck(*x) == -1 && failCheck(*y) == -1)
 	{
-		matlab_var_t *result = find_var(r);
-		matlab_var_t *var1 = find_var(x);
-		matlab_var_t *var2 = find_var(y);
+		matlab_var_t *result = find_var(*r);
+		matlab_var_t *var1 = find_var(*x);
+		matlab_var_t *var2 = find_var(*y);
 
-		switch(op)
+		switch(*op)
 		{
 		case '+':
 			result->v = var1->v + var2->v;
@@ -479,15 +448,18 @@ int calc(char r, char e, char x, char y, char op)
 		case '/':
 			result->v = var1->v / var2->v;
 			break;
+		default:
+			printf("Error: operator does not exist.\n");
+			return 0;
 		}
-		return show(r);
+		printf("%c = %g\n",*r,result->v);
 	}
-	else
+	else if(failCheck(*r) == 0 && failCheck(*x) == 0 && failCheck(*y) == 0)
 	{
-		matlab_arr_t *result = find_arr(r);
-		matlab_arr_t *array1 = find_arr(x);
-		matlab_arr_t *array2 = find_arr(y);
-		switch(op)
+		matlab_arr_t *result = find_arr(*r);
+		matlab_arr_t *array1 = find_arr(*x);
+		matlab_arr_t *array2 = find_arr(*y);
+		switch(*op)
 		{
 		case '+':
 			for(i = 0; i < 50; ++i)
@@ -505,9 +477,12 @@ int calc(char r, char e, char x, char y, char op)
 			for(i = 0; i < 50; ++i)
 				result->v[i] = array1->v[i] / array2->v[i];
 			break;
+		default:
+			printf("Error: operator does not exist.\n");
+			return 0;
 		}
-		return show(r);
 	}
+	return 0;
 }
 
 
@@ -604,7 +579,7 @@ int exportMAT(char *var, const char *filename)
 	header.imagf = 0;
 	header.namelen = 1 + 1;
 
-	FILE *outputFile = fopen(filename,"w");
+	FILE *outputFile = fopen(filename,"wb");
 
 	if(outputFile == NULL)
 	{
@@ -613,18 +588,14 @@ int exportMAT(char *var, const char *filename)
 	}
 
 	char *name[2] = {0};
-	name[0] = var;
+	name[0] = *var;
 	name[1] = '\0';
 
 	matlab_arr_t *array = find_arr(*var);
 
-	fwrite(&header,sizeof(uint32_t),5,outputFile); //Write header
-	fwrite(name,1,2,outputFile); //Write name
-
-	for(int i = 0; i < ARRAY_LEN; ++i) //Write array
-	{
-		fwrite(&(array->v[i]),sizeof(double),1,outputFile);
-	}
+	fwrite(&header,sizeof(Fmatrix),1,outputFile); //Write header
+	fwrite(&name,1,2,outputFile); //Write name
+	fwrite(array->v,sizeof(double),ARRAY_LEN,outputFile);
 
 	fclose(outputFile);
 
@@ -747,4 +718,3 @@ int event(char R, char I)
 
 	return 0;
 }
-
